@@ -105,7 +105,7 @@ $(document).ready(function () {
         var contrasena2 = $("#contrasena2").val().trim();    
 		$.ajax({
 			type: "POST",
-			url: base_url + "/ServicioSocial/index.php/ControladorSolicitarRegistro/registrarAlumno",
+			url: base_url + "/ServicioSocial/index.php/registrarAlumno",
 			data: {'nombre': nombre,
             'apellidos': apellidos,
             'matricula': matricula,
@@ -118,19 +118,39 @@ $(document).ready(function () {
             'contrasena2': contrasena2
 		},
 		success: function(response){    
-            print_r(response);
-			/*if(response == "noRegistrado"){
-				alert("Registro incorrecto, intente de nuevo");
-				window.location.href = base_url + "/RealServer/index.php/ControladorRegistrar/index"; 
-			}else{
-				alert("Registro correctamente realizado");  
-				window.location.href = base_url + "/RealServer/";  
-			}	    */                      
+            $("#modalConfirmacion").modal('hide');
+			if(response == 'yaExiste'){
+                $('<div class="alert alert-warning yaExiste" role="alert">Ya existe una cuenta con esa matrícula</div>').insertAfter($("#titulo"));
+                $('body,html').animate({scrollTop : 0}, 500);
+                setTimeout(function() {
+                    $(".yaExiste").fadeOut(1500);
+                },10000);
+            }  
+            if(response == 'datosInvalidos'){
+                $('<div class="alert alert-warning datosInvalidos" role="alert">Algunos datos son inválidos</div>').insertAfter($("#titulo"));
+                $('body,html').animate({scrollTop : 0}, 500);
+                setTimeout(function() {
+                    $(".datosInvalidos").fadeOut(1500);
+                },10000);
+            } 
+            if(response == 'vacio'){
+                $('<div class="alert alert-warning datosVacios" role="alert">Los datos no se recibieron correctamente, intenta de nuevo</div>').insertAfter($("#titulo"));
+                $('body,html').animate({scrollTop : 0}, 500);
+                setTimeout(function() {
+                    $(".datosVacios").fadeOut(1500);
+                },10000);
+            }
+            
+            if(response == '1'){
+                $("#modalExitoso").modal('show');
+            }
 		}
 		});
     });
 
-  
+    $("#botonCerrar").click(function(){
+        window.location.href = base_url + "/ServicioSocial/";
+    });
 
     $("#telefono").keypress(function(e){
         var keynum = window.event ? window.event.keyCode : e.which;

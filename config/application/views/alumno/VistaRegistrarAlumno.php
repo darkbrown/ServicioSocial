@@ -17,7 +17,7 @@
 <body>
 
     <div class="container-fluid">
-        <h2>Registrar Cuenta de Alumno</h2>
+        <h2 name="titulo" id="titulo">Registrar Cuenta de Alumno</h2>
         <form id="formularioAlumno" name="formularioAlumno" method="post">
             <div class="form-row">
                 <div class="form-group col-md-5 border-0">
@@ -104,6 +104,22 @@
                 <div class="modal-footer">
                     <button type="submit" name="botonEnviar" id="botonEnviar" class="btn btn-primary">ENVIAR</button>
                     <button type="button" name="botonCancelar" id="botonCancelar" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="modalExitoso" tabindex="-1" role="dialog" data-backdrop="static">
+        <div class="modal-dialog " role="document">
+            <div class="modal-content ">
+                <div class="modal-header">
+                    <h5 class="modal-title">Cuenta Creada Satisfactoriamente!!</h5>
+                    
+                </div>
+                <div class="modal-body">
+                    <p>Tu cuenta ha sido creada correctamente</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" name="botonCerrar" id="botonCerrar" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
                 </div>
             </div>
         </div>

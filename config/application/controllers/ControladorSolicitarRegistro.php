@@ -19,7 +19,7 @@ class ControladorSolicitarRegistro extends CI_Controller {
 
     public function registrarAlumno()
     {
-        $confirmacion = true;
+        $confirmacion = "";
         
         if($this->input->post()){
             $datos = array(
@@ -44,17 +44,25 @@ class ControladorSolicitarRegistro extends CI_Controller {
             $this->form_validation->set_rules('contrasena2', 'Contrasena2', 'trim|required|matches[contrasena]');
 
             if($this->form_validation->run() == TRUE){
-                $this->load->model('ModeloAlumno');        
-                $datos['contrasena'] = hash("sha256", $datos['contrasena']);
-                return $this->ModeloAlumno->registrarAlumno($datos);
+                $this->form_validation->set_rules('matricula', 'Matricula', 'trim|required|min_length[9]|max_length[9]|is_unique[alumno.matricula]');
+
+                if($this->form_validation->run() == TRUE){ 
+                    //Enviar el correo                   
+                    $this->load->model('ModeloAlumno');        
+                    $datos['contrasena'] = hash("sha256", $datos['contrasena']);
+                    $confirmacion = $this->ModeloAlumno->registrarAlumno($datos); //retorna '1' y no true
+                }else{
+                    $confirmacion = "yaExiste";
+                }
+                
             }else{
-                $confirmacion = false;
+                $confirmacion = "datosInvalidos";
             }
         }else{
-            $confirmacion = false;
+            $confirmacion =  "vacio";
         }
 
-        return $confirmacion;
+        echo $confirmacion;
     }
 }
 ?>
