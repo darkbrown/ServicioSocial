@@ -102,7 +102,7 @@
                     <p>Confirmar envio del formulario</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" name="botonEnviar" id="botonEnviar" class="btn btn-primary">ENVIAR</button>
+                    <button type="submit" name="botonEnviar" id="botonEnviar" class="btn btn-primary">ENVIAR</button>
                     <button type="button" name="botonCancelar" id="botonCancelar" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
                 </div>
             </div>

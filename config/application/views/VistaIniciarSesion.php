@@ -62,7 +62,7 @@
 						</button>
 					</div>
 					<div class="text-center w-full p-t-20">
-						<a class="txt1" href="<?php echo base_url()?>index.php/ControladorSolicitarRegistro/index">
+						<a class="txt1" href="<?php echo base_url()?>index.php/tipoCuenta">
 							Solicitar Registro
 							<i class="fa fa-long-arrow-right"></i>
 						</a>

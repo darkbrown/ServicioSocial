@@ -1,12 +1,12 @@
 $(document).ready(function () {
-
+    var base_url = window.location.origin;
     $("#formularioAlumno").validate({
 		rules: {
             nombre: { 
                 required: true,
                 normalizer: function (value) {
                     return $.trim(value);
-                }
+                }          
             },
             apellidos: {
                 required: true,
@@ -51,7 +51,9 @@ $(document).ready(function () {
 			
 		},
 		messages: {
-            nombre: "Dato requerido",
+            nombre: {
+                required: "Dato requerido"
+            },
             apellidos: "Dato requerido",
             matricula: {
                 required: "Dato requerido",
@@ -89,8 +91,43 @@ $(document).ready(function () {
         $("#modalConfirmacion").modal('hide');
     });
 
-    $("#botonEnviar").click(function(){
-        
+    $("#botonEnviar").click(function(e){
+        e.preventDefault();
+        var nombre = $("#nombre").val().trim();
+        var apellidos = $("#apellidos").val().trim();
+        var matricula = $("#matricula").val().trim();
+        var matricula2 = $("#matricula2").val().trim();
+        var bloque = $("#bloque").val().trim();
+        var seccion = $("#seccion").val().trim();
+		var correo = $("#correo").val().trim();
+		var telefono = $("#telefono").val().trim();
+        var contrasena = $("#contrasena").val().trim();    
+        var contrasena2 = $("#contrasena2").val().trim();    
+		$.ajax({
+			type: "POST",
+			url: base_url + "/ServicioSocial/index.php/ControladorSolicitarRegistro/registrarAlumno",
+			data: {'nombre': nombre,
+            'apellidos': apellidos,
+            'matricula': matricula,
+            'matricula2': matricula2,
+            'bloque': bloque,
+            'seccion': seccion,
+			'correo': correo,
+			'telefono': telefono,
+            'contrasena': contrasena,
+            'contrasena2': contrasena2
+		},
+		success: function(response){    
+            print_r(response);
+			/*if(response == "noRegistrado"){
+				alert("Registro incorrecto, intente de nuevo");
+				window.location.href = base_url + "/RealServer/index.php/ControladorRegistrar/index"; 
+			}else{
+				alert("Registro correctamente realizado");  
+				window.location.href = base_url + "/RealServer/";  
+			}	    */                      
+		}
+		});
     });
 
   
