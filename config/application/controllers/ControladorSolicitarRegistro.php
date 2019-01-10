@@ -14,6 +14,13 @@ class ControladorSolicitarRegistro extends CI_Controller {
 	{
         $this->load->view('EncabezadoVacio');
 		$this->load->view('VistaSolicitarRegistro');
-	}
+    }
+    
+
+    public function registrarAlumno()
+    {
+        $this->load->view('EncabezadoVacio');
+		$this->load->view('alumno/VistaRegistrarAlumno');
+    }
 }
 ?>

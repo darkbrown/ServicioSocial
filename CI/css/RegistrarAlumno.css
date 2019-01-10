@@ -1,0 +1,31 @@
+
+body { background: #eee }
+
+.container-fluid { max-width: 1000px; margin-top: 70px;}
+
+
+[class*="row"] {
+	margin-bottom: 1em;
+  justify-content: center;
+}
+
+[class*="col-"] {
+	background: #efefef;
+	border: 1px solid #ddd;
+	padding-top: .75rem;
+	padding-bottom: .75rem;
+	width: 100%;
+}
+
+.confirmacion{background:#C6FFD5;border:1px solid green;}
+.negacion{background:#ffcccc;border:1px solid red}
+
+
+form label.error {
+	float: right;
+	color: red;
+	font-weight: normal;
+	padding-left: .5em;
+	vertical-align: top;
+}
+

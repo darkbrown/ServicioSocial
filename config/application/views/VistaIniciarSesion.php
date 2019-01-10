@@ -14,6 +14,7 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url();?>vendor/select2/select2.min.css">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/IniciarSesion/util.css">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/IniciarSesion/main.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/SolicitarRegistro/main.css">
 	<script src="vendor/jquery/jquery.min.js"></script>
 	<script src="vendor/bootstrap/js/popper.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>

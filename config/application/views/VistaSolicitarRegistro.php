@@ -27,7 +27,7 @@
                                 <p class="card-text">Solo para estudiantes de la LIS</p>
                             </div>
                             <div class="col-4 bg-white border-white">
-                                <a href="#" class="btn btn-primary">REGISTRAR</a>
+                                <a href="<?php echo base_url()?>index.php/ControladorSolicitarRegistro/registrarAlumno" class="btn btn-primary">REGISTRAR</a>
                             </div>
                         </div>
                     </div>
@@ -45,7 +45,7 @@
                                     enviar tus proyectos?</p>
                             </div>
                             <div class="col-4 bg-white border-white">
-                                <a href="#" class="btn btn-primary">REGISTRAR</a>
+                                <a href="<?php echo base_url()?>index.php/ControladorSolicitarRegistro/registrarDependencia" class="btn btn-primary">REGISTRAR</a>
                             </div>
                         </div>
                     </div>
