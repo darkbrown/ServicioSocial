@@ -12,12 +12,12 @@
 
 @font-face {
   font-family: Montserrat-ExtraBold;
-  src: url('../fonts/montserrat/Montserrat-ExtraBold.ttf'); 
+  src: url('../fonts/montserrat/Montserrat-Light.ttf'); 
 }
 
 @font-face {
   font-family: Montserrat-Bold;
-  src: url('../fonts/montserrat/Montserrat-Bold.ttf'); 
+  src: url('../fonts/montserrat/Montserrat-Medium.ttf'); 
 }
 
 
@@ -77,9 +77,35 @@ ul, li {
 
 
 /*---------------------------------------------*/
+.error {
+
+  animation: error 7s linear forwards;
+    -webkit-animation: error 7s linear forwards; 
+    width:100%;
+  display:block;
+  float: right;
+	color: red;
+	font-weight: normal;
+  padding-left: .5em;
+  text-align: right;
+
+       
+}
+
+.input-group {
+  flex-wrap:wrap;
+  width:100%
+}
+
+
+i{
+  margin-top: 20px;
+}
+
 input {
 	outline: none;
-	border: none;
+  border: none;
+  margin-top: 20px;
 }
 
 textarea {
@@ -135,6 +161,7 @@ iframe {
   color: #cccccc;
   line-height: 1.4;
 }
+
 
 .bo1 {
   border-bottom: 1px solid #999999;

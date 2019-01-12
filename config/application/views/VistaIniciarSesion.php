@@ -15,11 +15,12 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/IniciarSesion/util.css">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/IniciarSesion/main.css">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/SolicitarRegistro/main.css">
-	<script src="vendor/jquery/jquery.min.js"></script>
-	<script src="vendor/bootstrap/js/popper.js"></script>
-	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-	<script src="vendor/select2/select2.min.js"></script>
-	<script src="js/IniciarSesion/main.js"></script>
+	<script src="<?php echo base_url();?>vendor/jquery/jquery.min.js"></script>
+	<script src="<?php echo base_url();?>vendor/bootstrap/js/popper.js"></script>
+	<script src="<?php echo base_url();?>vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="<?php echo base_url();?>vendor/select2/select2.min.js"></script>
+	<script src="<?php echo base_url();?>js/IniciarSesion.js"></script>
+	<script type="text/javascript" src="<?php echo base_url();?>js/jquery.validate.js"></script>
 </head>
 
 <body>
@@ -27,28 +28,24 @@
 	<div class="limiter">
 		<div class="container-login100" style="background-image: url('<?php echo base_url();?>images/IniciarSesion/img-02.jpg');">
 			<div class="wrap-login100 p-t-10 p-b-30">
-				<form class="login100-form validate-form" method="post">
+				<form class="login100-form" name="formularioInicio" id="formularioInicio" method="post">
 					<span class="login100-form-title2">
 						SERVICIO SOCIAL
 					</span>
-					<span class="login100-form-title p-t-20 p-b-45">
+					<span class="login100-form-title p-t-20 p-b-45" id="titulo" name="titulo">
 						LICENCIATURA EN INGENIERÍA DE SOFTWARE
 					</span>
 
-					<div class="wrap-input100 validate-input m-b-10" data-validate="Correo Electrónico Requerido">
-						<input class="input100" type="email" name="correo" placeholder="Correo Electrónico">
-						<span class="focus-input100"></span>
-						<span class="symbol-input100">
-							<i class="fa fa-at"></i>
-						</span>
+
+					<div class="input-group">
+						<i class="fa fa-at input-group-addon"></i>
+						<input class="form-control" type="email" id="correo" name="correo" value="prueba@gmail.com" placeholder="Correo Electrónico">
 					</div>
 
-					<div class="wrap-input100 validate-input m-b-10" data-validate="Contraseña Requerida">
-						<input class="input100" type="password" name="contrasena" placeholder="Contraseña">
-						<span class="focus-input100"></span>
-						<span class="symbol-input100">
-							<i class="fa fa-lock"></i>
-						</span>
+
+					<div class="input-group">
+						<i class="fa fa-lock input-group-addon"></i>
+						<input class="form-control" type="password" id="contrasena" name="contrasena" value="123456" placeholder="Contraseña">
 					</div>
 					<div class="text-right w-full p-t-5 p-b-5">
 						<a href="#" class="txt1">
@@ -71,7 +68,22 @@
 			</div>
 		</div>
 	</div>
-
+	<div class="modal" id="modalNoExitoso" tabindex="-1" role="dialog" data-backdrop="static">
+        <div class="modal-dialog " role="document">
+            <div class="modal-content ">
+                <div class="modal-header">
+                    <h5 class="modal-title tituloNoExitoso">Cuenta Creada Satisfactoriamente!!</h5>
+                    
+                </div>
+                <div class="modal-body">
+                    <p class="contenidoNoExitoso">Tu cuenta ha sido creada correctamente</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" name="botonCerrar" id="botonCerrar" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </body>
 

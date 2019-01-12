@@ -68,7 +68,7 @@ $(document).ready(function () {
             seccion: "Selecciona una sección",
 			correo : {
                 required: "Dato requerido",
-                email: "Ingrese una dirección de correo valida"
+                email: "Ingrese una dirección de correo válida"
             },
 			telefono : "Dato requerido",
 			contrasena: {
@@ -120,12 +120,13 @@ $(document).ready(function () {
 		success: function(response){    
             $("#modalConfirmacion").modal('hide');
 			if(response == 'yaExiste'){
-                $('<div class="alert alert-warning yaExiste" role="alert">Ya existe una cuenta con esa matrícula</div>').insertAfter($("#titulo"));
+                $('<div class="alert alert-warning yaExiste" role="alert">Ya existe una cuenta con esa matrícula o dirección de correo</div>').insertAfter($("#titulo"));
                 $('body,html').animate({scrollTop : 0}, 500);
                 setTimeout(function() {
                     $(".yaExiste").fadeOut(1500);
                 },10000);
             }  
+            
             if(response == 'datosInvalidos'){
                 $('<div class="alert alert-warning datosInvalidos" role="alert">Algunos datos son inválidos</div>').insertAfter($("#titulo"));
                 $('body,html').animate({scrollTop : 0}, 500);

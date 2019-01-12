@@ -53,5 +53,7 @@ $route['default_controller'] = 'ControladorIniciarSesion';
 $route['formularioAlumno'] = 'ControladorSolicitarRegistro/formularioAlumno';
 $route['tipoCuenta'] = '/ControladorSolicitarRegistro/index';
 $route['registrarAlumno'] = '/ControladorSolicitarRegistro/registrarAlumno';
+$route['iniciarSesion'] = 'ControladorIniciarSesion/iniciarSesion';
+$route['inicioAlumno'] = 'ControladorInicioAlumno/index';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

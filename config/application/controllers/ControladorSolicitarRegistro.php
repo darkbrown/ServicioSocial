@@ -23,12 +23,12 @@ class ControladorSolicitarRegistro extends CI_Controller {
         
         if($this->input->post()){
             $datos = array(
-                'nombre' => $this->input->post('nombre'),
-                'apellidos' => $this->input->post('apellidos'),
-                'matricula' => $this->input->post('matricula'),
+                'nombre' => strtoupper($this->input->post('nombre')),
+                'apellidos' => strtoupper($this->input->post('apellidos')),
+                'matricula' => strtoupper($this->input->post('matricula')),
                 'bloque' => $this->input->post('bloque'),
                 'seccion' => $this->input->post('seccion'),
-                'correo' => $this->input->post('correo'),
+                'correo' => strtoupper($this->input->post('correo')),
                 'telefono' => $this->input->post('telefono'),
                 'contrasena' => $this->input->post('contrasena')
             );
@@ -45,16 +45,16 @@ class ControladorSolicitarRegistro extends CI_Controller {
 
             if($this->form_validation->run() == TRUE){
                 $this->form_validation->set_rules('matricula', 'Matricula', 'trim|required|min_length[9]|max_length[9]|is_unique[alumno.matricula]');
-
-                if($this->form_validation->run() == TRUE){ 
-                    //Enviar el correo                   
+                $this->form_validation->set_rules('correo', 'Correo', 'trim|required|valid_email|is_unique[alumno.correo]');
+                if($this->form_validation->run() == TRUE){                    
                     $this->load->model('ModeloAlumno');        
                     $datos['contrasena'] = hash("sha256", $datos['contrasena']);
+                    $datos['estatus'] = '1';
+                    $datos['tipoUsuario'] = 'ALUMNO';
                     $confirmacion = $this->ModeloAlumno->registrarAlumno($datos); //retorna '1' y no true
                 }else{
                     $confirmacion = "yaExiste";
-                }
-                
+                }               
             }else{
                 $confirmacion = "datosInvalidos";
             }

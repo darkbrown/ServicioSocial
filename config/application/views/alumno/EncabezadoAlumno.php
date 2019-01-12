@@ -10,7 +10,7 @@
 
 </head>
 
-<body>
+<body background = '<?php echo base_url();?>images/beee.jpg'>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a href="<?php echo base_url()?>index.php/ControladorPaginaPrincipal/index" class="navbar-brand">LIS | SERVICIO SOCIAL</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarSupportedContent"
@@ -18,14 +18,14 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
-                    <a href="<?php echo base_url()?>index.php/ControladorPaginaPrincipal/index" class="nav-link">Mis
-                        documentos</a>
-                </li>
-            </ul>
+         
         </div>
     </nav>
+    <h1> BIENVENIDA!!!! </h1>
+    <h1> HOLA BEEEE BEEEEE </h1>
+    <font size="200">GUAPA</font>
 </body>
+
+
 
 </html>
