@@ -33,10 +33,9 @@ class ControladorIniciarSesion extends CI_Controller {
 				$usuario = $this->ModeloUsuarios->iniciarSesion($datos);
 				
 				if(count($usuario)){
-					if($usuario[0]['estatus'] == '1'){
+					if($usuario[0]['estatus'] == 'ACTIVO'){
 						$datosUsuario = array();
-						if($usuario[0]['tipoUsuario'] == 'ALUMNO'){
-					
+						if(isset($usuario[0]['matricula'])){
 							$datosUsuario = array(
 								'correo' => $usuario[0]['correo'],
 								'nombre' => $usuario[0]['nombre'],
@@ -46,6 +45,20 @@ class ControladorIniciarSesion extends CI_Controller {
 							);
 							
 							$directorio = realpath(APPPATH) . '/archivos/' . base64_encode('ALUMNOS') . '/'.base64_encode($usuario[0]['matricula']);
+							
+						}else{
+							$datosUsuario = array(
+								'correo' => $usuario[0]['correo'],
+								'nombre' => $usuario[0]['nombre'],
+								'tipoUsuario' => 'COORDINADOR',
+								'apellidos' => $usuario[0]['apellidos']
+							);
+
+							$directorio = realpath(APPPATH) . '/archivos/' . base64_encode('COORDINADORES') . '/'.base64_encode($usuario[0]['correo']);
+						}
+
+						
+						if(isset($directorio)){
 							if(!file_exists($directorio)){
 								mkdir($directorio, 0777, true);
 							}
@@ -64,12 +77,10 @@ class ControladorIniciarSesion extends CI_Controller {
 						
 						$this->session->set_userdata($datosUsuario);
 						
-						if($this->session->userdata('tipoUsuario') == 'ALUMNO'){
-							
-							//redirect('ControladorInicioAlumno/index');
-							//$this->load->view('alumno/VistaInicio');
-							
-							$confirmacion = 'exitosa';
+						if($this->session->userdata('tipoUsuario') == 'ALUMNO'){										
+							$confirmacion = 'alumno';
+						}elseif($this->session->userdata('tipoUsuario') == 'COORDINADOR'){
+							$confirmacion = 'coordinador';
 						}
 					}else{
 						$confirmacion = 'suspendido';

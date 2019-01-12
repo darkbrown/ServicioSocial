@@ -1,8 +1,16 @@
-
 body { background: #eee }
 
 .container-fluid { max-width: 1000px; margin-top: 70px;}
 
+.encabezadoTabla{background: rgba(0, 0, 0, 0.301)}
+
+table{
+    margin-top: 15px;
+}
+
+h2{
+    text-align: center;
+}
 
 [class*="row"] {
 	margin-bottom: 1em;
@@ -17,17 +25,10 @@ body { background: #eee }
 	width: 100%;
 }
 
-.confirmacion{background:#C6FFD5;border:1px solid green;}
-.negacion{background:#ffcccc;border:1px solid red}
-
-
-form label.error {
-	float: right;
-	color: red;
-	font-weight: normal;
-	padding-left: .5em;
-	vertical-align: top;
+.cambiarContrasena{
+	margin-left: .75rem;
 }
-h2{
-    text-align: center;
+.cambiarMatricula{
+	margin-left: .75rem;
+	margin-right: .75rem;
 }

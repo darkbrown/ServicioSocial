@@ -49,8 +49,7 @@ class ControladorSolicitarRegistro extends CI_Controller {
                 if($this->form_validation->run() == TRUE){                    
                     $this->load->model('ModeloAlumno');        
                     $datos['contrasena'] = hash("sha256", $datos['contrasena']);
-                    $datos['estatus'] = '1';
-                    $datos['tipoUsuario'] = 'ALUMNO';
+                    $datos['estatus'] = 'ACTIVO';
                     $confirmacion = $this->ModeloAlumno->registrarAlumno($datos); //retorna '1' y no true
                 }else{
                     $confirmacion = "yaExiste";

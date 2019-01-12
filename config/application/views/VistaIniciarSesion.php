@@ -15,11 +15,11 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/IniciarSesion/util.css">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/IniciarSesion/main.css">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/SolicitarRegistro/main.css">
-	<script src="<?php echo base_url();?>vendor/jquery/jquery.min.js"></script>
-	<script src="<?php echo base_url();?>vendor/bootstrap/js/popper.js"></script>
-	<script src="<?php echo base_url();?>vendor/bootstrap/js/bootstrap.min.js"></script>
-	<script src="<?php echo base_url();?>vendor/select2/select2.min.js"></script>
-	<script src="<?php echo base_url();?>js/IniciarSesion.js"></script>
+	<script type="text/javascript" src="<?php echo base_url();?>vendor/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="<?php echo base_url();?>vendor/bootstrap/js/popper.js"></script>
+	<script type="text/javascript" src="<?php echo base_url();?>vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="<?php echo base_url();?>vendor/select2/select2.min.js"></script>
+	<script type="text/javascript" src="<?php echo base_url();?>js/IniciarSesion.js"></script>
 	<script type="text/javascript" src="<?php echo base_url();?>js/jquery.validate.js"></script>
 </head>
 
@@ -68,23 +68,6 @@
 			</div>
 		</div>
 	</div>
-	<div class="modal" id="modalNoExitoso" tabindex="-1" role="dialog" data-backdrop="static">
-        <div class="modal-dialog " role="document">
-            <div class="modal-content ">
-                <div class="modal-header">
-                    <h5 class="modal-title tituloNoExitoso">Cuenta Creada Satisfactoriamente!!</h5>
-                    
-                </div>
-                <div class="modal-body">
-                    <p class="contenidoNoExitoso">Tu cuenta ha sido creada correctamente</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" name="botonCerrar" id="botonCerrar" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
 </body>
 
 </html>

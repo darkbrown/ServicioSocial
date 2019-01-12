@@ -30,7 +30,8 @@ $(document).ready(function () {
                 'correo': correo,
                 'contrasena': contrasena
             },
-            success: function(response){    
+            success: function(response){   
+                alert(response); 
                 if(response == 'vacio'){
                     $(".datosVacios").fadeOut(1);
                     $('<div class="alert alert-warning datosVacios" role="alert">Los datos no se recibieron correctamente, intenta de nuevo</div>').insertAfter($("#titulo"));
@@ -67,8 +68,12 @@ $(document).ready(function () {
                     },10000);
                 } 
 
-                if(response == 'exitosa'){
+                if(response == 'alumno'){
                     window.location.href = base_url + "/ServicioSocial/index.php/inicioAlumno"; 
+                } 
+
+                if(response == 'coordinador'){
+                    window.location.href = base_url + "/ServicioSocial/index.php/Coordinador"; 
                 } 
                 
             }
