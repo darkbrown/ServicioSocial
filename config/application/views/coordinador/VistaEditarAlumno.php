@@ -64,8 +64,8 @@
                 </div>
             </div>
             <div class="row"> 
-                <input type="button" class="btn btn-dark cambiarContrasena" value="CAMBIAR CONTRASEÑA">
-                <input type="button" class="btn btn-dark cambiarMatricula" value="CAMBIAR MATRÍCULA">
+                <input type="button" class="btn btn-dark" id="cambiarContrasena" name="cambiarContrasena" value="CAMBIAR CONTRASEÑA">
+                <input type="button" class="btn btn-dark" id="cambiarMatricula" name="cambiarMatricula" value="CAMBIAR MATRÍCULA">
                 <input type="submit" class="btn btn-primary" value="GUARDAR CAMBIOS">
             </div>
         </form>
@@ -91,8 +91,7 @@
         <div class="modal-dialog " role="document">
             <div class="modal-content ">
                 <div class="modal-header">
-                    <h5 class="modal-title">Datos Guardados Satisfactoriamente!!</h5>
-                    
+                    <h5 class="modal-title">Datos Guardados Satisfactoriamente!!</h5>                   
                 </div>
                 <div class="modal-body">
                     <p>Los datos han sido guardados correctamente</p>

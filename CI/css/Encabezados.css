@@ -32,3 +32,25 @@ h2{
 	margin-left: .75rem;
 	margin-right: .75rem;
 }
+
+.datoslbl{
+	font-size: large;
+}
+.datoslbl2{
+	font-size: large;
+	font-weight: bolder;
+}
+form label.error {
+	float: right;
+	color: red;
+	font-weight: normal;
+	padding-left: .5em;
+	vertical-align: top;
+}
+
+.camposiguales{
+	background:#C6FFD5;
+	border:1px solid green;
+	display: block;
+	float: right
+ }

@@ -22,4 +22,23 @@ class ModeloAlumno extends CI_Model {
         return (bool)($this->db->affected_rows() > 0);
     }
 
+    public function modificarMatricula($matriculaAnterior, $matriculaNueva){
+        $this->db->where('matricula', $matriculaAnterior);
+        $this->db->update('alumno', $matriculaNueva);
+        return (bool)($this->db->affected_rows() > 0);
+    }
+
+    public function verificarMatricula($matricula){
+        $estatus="0";
+        $this->db->where('matricula', $matricula);
+        $alumno = $this->db->get('alumno')->result_array();        
+        if(count($alumno) > 0){
+            $estatus = "1";
+        }
+ 
+        return $estatus;
+    }
+
 }
+
+?>

@@ -17,8 +17,12 @@ body { background: #eee }
 	width: 100%;
 }
 
-.confirmacion{background:#C6FFD5;border:1px solid green;}
-.negacion{background:#ffcccc;border:1px solid red}
+.camposiguales{
+	background:#C6FFD5;
+	border:1px solid green;
+	display: block;
+	float: right
+ }
 
 
 form label.error {

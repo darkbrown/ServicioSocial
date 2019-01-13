@@ -135,4 +135,10 @@ $(document).ready(function () {
         return /\d/.test(String.fromCharCode(keynum));
     });
 
+    $("#cambiarMatricula").click(function(){
+        var matricula = $('#matricula').val().trim();
+        matricula = encodeURIComponent(btoa(matricula));
+        window.location.href = base_url + "/ServicioSocial/index.php/CambiarMatricula/" + matricula;    
+    });
+
 });

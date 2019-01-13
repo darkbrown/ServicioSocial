@@ -160,6 +160,85 @@ $(document).ready(function () {
         return /\d/.test(String.fromCharCode(keynum));
     });
 
+    function coincideMatricula() {
+		var valor1 = matricula1.val().trim();
+		var valor2 = matricula2.val().trim();
+		//muestro el span
+		spanMatricula2.show().removeClass();
+		//condiciones dentro de la función
+		if (valor1 != valor2) {
+			spanMatricula2.text(negacionMatricula).addClass('negacion');
+		}
+		if (valor1.length != 0 && valor1 == valor2) {
+			spanMatricula2.text(confirmarMatricula).removeClass("negacion").addClass('confirmacion');
+		}
+    }
+    
+    //----MENSAJE CUANDO COINCIDEN LAS MATRICULAS-----
+
+    var matricula1 = $('[name=matricula]');
+	var matricula2 = $('[name=matricula2]');
+    
+    var spanMatricula2 = $('<span class="camposiguales">Coinciden</span>').insertAfter(matricula2);
+	spanMatricula2.hide();
+
+    matricula1.keyup(function () {
+        matricula2.val("");
+        spanMatricula2.hide();
+    });
+
+	matricula2.keyup(function () {
+        var valor1 = matricula1.val().trim();
+        if(valor1.length == 9){
+            coincideMatricula();
+        }else{
+            spanMatricula2.hide();
+        }     
+    });
+
+    function coincideMatricula() {
+		var valor1 = matricula1.val().trim();
+		var valor2 = matricula2.val().trim();
+		if (valor1.length != 0 && valor1 == valor2) {     
+			spanMatricula2.show();
+		}else{
+            spanMatricula2.hide();
+        }
+	}
+    
+      //----MENSAJE CUANDO COINCIDEN LAS CONTRASEÑAS-----
+
+
+      var contrasena = $('[name=contrasena]');
+      var contrasena2 = $('[name=contrasena2]');
+      
+      var spanContrasena2 = $('<span class="camposiguales">Coinciden</span>').insertAfter(contrasena2);
+      spanContrasena2.hide();
+  
+      contrasena.keyup(function () {
+        contrasena2.val("");
+          spanContrasena2.hide();
+      });
+  
+      contrasena2.keyup(function () {
+          var valor1 = contrasena.val().trim();
+          if(valor1.length >= 6 || valor1.length <= 15){
+              coincideContrasena();
+          }else{
+            spanContrasena2.hide();
+          }     
+      });
+  
+      function coincideContrasena() {
+          var valor1 = contrasena.val().trim();
+          var valor2 = contrasena2.val().trim();
+          if (valor1.length != 0 && valor1 == valor2) {     
+            spanContrasena2.show();
+          }else{
+            spanContrasena2.hide();
+          }
+      }
+
 });
 
 

@@ -1,4 +1,6 @@
+
 <div class="container-fluid">
+
     <h2 name="titulo" id="titulo">Lista de Alumnos</h2>
 
     <div class="input-group">
@@ -36,17 +38,15 @@
                 <?php echo $item['telefono'] ?>
             </td>
             <td>
-                <a href="#" class="editar btn btn-sm btn-warning">EDITAR</a>
-                <a href="#" class="consultar btn btn-sm btn-info">CONSULTAR</a>
-                <a href="#" class="cambiarEstatus btn btn-sm btn-danger">
-                    <?php if($item['estatus']=='ACTIVO'){echo 'SUSPENDER';}else{echo 'ACTIVAR';}?></a>
+                <input type="button" class="editar btn btn-sm btn-warning" id="editar" name="editar" value="EDITAR">
+                <input type="button" class="consultar btn btn-sm btn-info" id="consultar" name="consultar" value="VER">
+                <input type="button" class="cambiarEstatus btn btn-sm btn-danger" id="cambiarEstatus" name="cambiarEstatus" value=<?php if($item['estatus']=='ACTIVO'){echo 'SUSPENDER';}else{echo 'ACTIVAR';}?>>      
             </td>
         </tr>
         <?php endforeach; ?>
     </table>
 </div>
 </div>
-
 
 </body>
 

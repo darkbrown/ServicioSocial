@@ -62,8 +62,7 @@ class ControladorInicioCoordinador extends CI_Controller {
             $datos = array(
                 'nombre' => strtoupper($this->input->post('nombre')),
 				'apellidos' => strtoupper($this->input->post('apellidos')),
-				'matricula' => strtoupper($this->input->post('matricula')),
-				
+				'matricula' => strtoupper($this->input->post('matricula')),				
                 'bloque' => $this->input->post('bloque'),
                 'seccion' => $this->input->post('seccion'),
                 'correo' => strtoupper($this->input->post('correo')),
@@ -92,7 +91,56 @@ class ControladorInicioCoordinador extends CI_Controller {
         echo $confirmacion;
 	}
 
+	public function cambiarMatricula($matricula)
+	{
+		$matricula = base64_decode(urldecode($matricula));
+		
+		if(strlen($matricula) <= 9 && strlen($matricula) > 0){
+			$datos['matricula'] = $matricula;
+			$this->load->view('coordinador/EncabezadoCoordinador');
+			$this->load->view('coordinador/VistaMatricula', $datos);
+			
+		}else{
+			echo "LOS DATOS NO SE RECIBIERON CORRECTAMENTE";
+		}	
+	}
+
+	public function modificarMatricula()
+	{
+		
+		$confirmacion = "";
+        
+        if($this->input->post()){
+			$this->load->model('ModeloAlumno'); 
+            $matriculaAnterior = strtoupper($this->input->post('matriculaAnterior'));
+			$matriculaNueva = strtoupper($this->input->post('matriculaNueva'));
+			$matriculaNueva2 = strtoupper($this->input->post('matriculaNueva2'));
+            $this->form_validation->set_rules('matriculaAnterior', 'MatriculaAnterior', 'trim|required|min_length[9]|max_length[9]');
+			$this->form_validation->set_rules('matriculaNueva', 'MatriculaNueva', 'trim|required|min_length[9]|max_length[9]');
+			$this->form_validation->set_rules('matriculaNueva2', 'MatriculaNueva2', 'trim|required|min_length[9]|max_length[9]|matches[matriculaNueva]');			
+            if($this->form_validation->run() == TRUE){	
+				if($matriculaAnterior != $matriculaNueva){			
+					if($this->ModeloAlumno->verificarMatricula($matriculaNueva) == "1"){
+						$this->load->model('ModeloAlumno');  
+						$datos = array(
+							'matricula' => $matriculaNueva
+						);      
+						$confirmacion = $this->ModeloAlumno->modificarMatricula($matriculaAnterior, $datos);
+					}else{
+						$confirmacion = "yaExiste";
+					}
+				}else{
+					$confirmacion = "sonIguales";
+				}
+            }else{
+                $confirmacion = "datosInvalidos";
+            }
+        }else{
+            $confirmacion = "vacio";
+        }
+
+        echo $confirmacion;
+	}
+
 }
-
-
 ?>	

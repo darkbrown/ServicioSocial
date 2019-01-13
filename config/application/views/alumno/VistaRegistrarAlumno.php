@@ -77,7 +77,7 @@
                 </div>
                 <div class="form-group col-md-5 border-0">
                     <label for="contrasena">Contraseña</label>
-                    <input type="password" name="contrasena" class="form-control" id="contrasena" minlength="6"
+                    <input type="password" class="form-control"  name="contrasena" id="contrasena" minlength="6"
                         maxlength="15" value="123456" required>
                 </div>
                 <div class="form-group col-md-5 border-0">

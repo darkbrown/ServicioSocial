@@ -99,6 +99,5 @@ class ControladorIniciarSesion extends CI_Controller {
 
 		echo $confirmacion;
 	}
-
-
 }
+?>
