@@ -117,7 +117,8 @@ $(document).ready(function () {
             'contrasena': contrasena,
             'contrasena2': contrasena2
 		},
-		success: function(response){    
+		success: function(response){   
+            alert(response); 
             $("#modalConfirmacion").modal('hide');
 			if(response == 'yaExiste'){
                 $('<div class="alert alert-warning yaExiste" role="alert">Ya existe una cuenta con esa matrícula o dirección de correo</div>').insertAfter($("#titulo"));
@@ -139,6 +140,14 @@ $(document).ready(function () {
                 $('body,html').animate({scrollTop : 0}, 500);
                 setTimeout(function() {
                     $(".datosVacios").fadeOut(1500);
+                },10000);
+            }
+
+            if(response == 'error'){
+                $('<div class="alert alert-warning error" role="alert">Error al registrar su cuenta, intente de nuevo</div>').insertAfter($("#titulo"));
+                $('body,html').animate({scrollTop : 0}, 500);
+                setTimeout(function() {
+                    $(".error").fadeOut(1500);
                 },10000);
             }
             

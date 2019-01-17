@@ -51,4 +51,4 @@
 </body>
 
 </html>
-<script type="text/javascript" src="<?php echo base_url();?>js/ListaAlumnos.js"></script>
+<script type="text/javascript" src="<?php echo base_url();?>js/coordinador/ListaAlumnos.js"></script>

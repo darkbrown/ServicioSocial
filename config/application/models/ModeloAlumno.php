@@ -11,8 +11,12 @@ class ModeloAlumno extends CI_Model {
         return $this->db->get('alumno')->result_array();
     }
 
-    public function obtenerAlumno($matricula){
+    public function obtenerAlumnoXMatricula($matricula){
         $this->db->where('matricula', $matricula);
+        return $this->db->get('alumno')->result_array();
+    }
+    public function obtenerAlumnoXUsuario($idUsuario){
+        $this->db->where('Usuario_idUsuario', $idUsuario);
         return $this->db->get('alumno')->result_array();
     }
 
@@ -29,7 +33,7 @@ class ModeloAlumno extends CI_Model {
     }
 
     public function verificarMatricula($matricula){
-        $estatus="0";
+        $estatus= "0";
         $this->db->where('matricula', $matricula);
         $alumno = $this->db->get('alumno')->result_array();        
         if(count($alumno) > 0){

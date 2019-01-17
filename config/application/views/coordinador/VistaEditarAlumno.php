@@ -107,4 +107,4 @@
 </body>
 </html>
 
-<script type="text/javascript" src="<?php echo base_url();?>js/EditarAlumno.js"></script>
+<script type="text/javascript" src="<?php echo base_url();?>js/coordinador/EditarAlumno.js"></script>

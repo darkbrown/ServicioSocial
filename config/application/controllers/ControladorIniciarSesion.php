@@ -19,7 +19,7 @@ class ControladorIniciarSesion extends CI_Controller {
 	{
 		$confirmacion = "dsads";
 		if($this->input->post()){
-			$datos = array(
+			$usuario = array(
                 'correo' => strtoupper ($this->input->post('correo')),
                 'contrasena' => $this->input->post('contrasena')
             );
@@ -27,68 +27,72 @@ class ControladorIniciarSesion extends CI_Controller {
 			$this->form_validation->set_rules('contrasena', 'Contrasena', 'trim|required');
 
 			if($this->form_validation->run() == TRUE){
-				$this->load->model('ModeloUsuarios');        
-				$datos['contrasena'] = hash("sha256", $datos['contrasena']);
-				$usuario = array();
-				$usuario = $this->ModeloUsuarios->iniciarSesion($datos);
-				
-				if(count($usuario)){
-					if($usuario[0]['estatus'] == 'ACTIVO'){
-						$datosUsuario = array();
-						if(isset($usuario[0]['matricula'])){
-							$datosUsuario = array(
-								'correo' => $usuario[0]['correo'],
-								'nombre' => $usuario[0]['nombre'],
-								'tipoUsuario' => 'ALUMNO',
-								'matricula' => $usuario[0]['matricula'],
-								'apellidos' => $usuario[0]['apellidos']
-							);
-							
-							$directorio = realpath(APPPATH) . '/archivos/' . base64_encode('ALUMNOS') . '/'.base64_encode($usuario[0]['matricula']);
-							
+				$this->load->model('ModeloUsuario');        
+				$usuario['contrasena'] = hash("sha256", $usuario['contrasena']);
+				$nuevoUsuario = Array();
+				$nuevoUsuario = $this->ModeloUsuario->obtenerUsuario($usuario);
+				if(count($nuevoUsuario) > 0){
+					if($nuevoUsuario[0]['estatus'] != 'SUSPENDIDO'){
+						$datosSesion = Array();
+						if($nuevoUsuario[0]['tipo'] == 'ALUMNO'){
+							$this->load->model('ModeloAlumno');
+							$alumno = $this->ModeloAlumno->obtenerAlumnoXUsuario($nuevoUsuario[0]['idUsuario']);
+							if(count($alumno) > 0){
+								$datosSesion = array(
+									'correo' => $nuevoUsuario[0]['correo'],
+									'nombre' => $alumno[0]['nombre'],
+									'tipoUsuario' => $nuevoUsuario[0]['tipo'],
+									'matricula' => $alumno[0]['matricula'],
+									'apellidos' => $alumno[0]['apellidos'],
+									'idUsuario' => $nuevoUsuario[0]['idUsuario']
+								);
+								$directorio = realpath(APPPATH) . '/archivos/' . base64_encode('ALUMNOS') . '/'.base64_encode($nuevoUsuario[0]['idUsuario']);
+							}else{
+								$confirmacion = 'noExiste';
+							}
+						}elseif($nuevoUsuario[0]['tipo'] == 'COORDINADOR'){
+							$this->load->model('ModeloCoordinador');
+							$coordinador = $this->ModeloCoordinador->obtenerCoordinadorXUsuario($nuevoUsuario[0]['idUsuario']);
+							if(count($coordinador) > 0){
+								$datosSesion = array(
+									'correo' => $nuevoUsuario[0]['correo'],
+									'nombre' => $coordinador[0]['nombre'],
+									'tipoUsuario' => $nuevoUsuario[0]['tipo'],
+									'apellidos' => $coordinador[0]['apellidos'],
+									'idUsuario' => $nuevoUsuario[0]['idUsuario']
+								);
+								$directorio = realpath(APPPATH) . '/archivos/' . base64_encode('COORDINADORES') . '/'.base64_encode($nuevoUsuario[0]['idUsuario']);
+							}else{
+								$confirmacion = 'noExiste';
+							}					
 						}else{
-							$datosUsuario = array(
-								'correo' => $usuario[0]['correo'],
-								'nombre' => $usuario[0]['nombre'],
-								'tipoUsuario' => 'COORDINADOR',
-								'apellidos' => $usuario[0]['apellidos']
-							);
+							//AQUI VA EL OTRO TIPO DE USUARIO
 
-							$directorio = realpath(APPPATH) . '/archivos/' . base64_encode('COORDINADORES') . '/'.base64_encode($usuario[0]['correo']);
+
+
+							//
 						}
 
-						
 						if(isset($directorio)){
 							if(!file_exists($directorio)){
 								mkdir($directorio, 0777, true);
 							}
 						}
-
-						/**AQUI DEBE DE IR EL CÓDIGO PARA VALIDAR A LOS DEMAS USUARIOS
-						 * 
-						 * 
-						 * 
-						 * 
-						 * 
-						 */
-						
-			
-						
-						
-						$this->session->set_userdata($datosUsuario);
-						
-						if($this->session->userdata('tipoUsuario') == 'ALUMNO'){										
-							$confirmacion = 'alumno';
-						}elseif($this->session->userdata('tipoUsuario') == 'COORDINADOR'){
-							$confirmacion = 'coordinador';
-						}
+		
+						$this->session->set_userdata($datosSesion);
+								
+								if($this->session->userdata('tipoUsuario') == 'ALUMNO'){										
+									$confirmacion = 'alumno';
+								}elseif($this->session->userdata('tipoUsuario') == 'COORDINADOR'){
+									$confirmacion = 'coordinador';
+								}
 					}else{
 						$confirmacion = 'suspendido';
 					}
+					
 				}else{
 					$confirmacion = 'noExiste';
-				}
-				
+				}							
 			}else{
 				$confirmacion = 'datosInvalidos';
 			}

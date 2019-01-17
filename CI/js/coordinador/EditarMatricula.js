@@ -92,6 +92,14 @@ $(document).ready(function () {
                 },10000);
             }
 
+            if(response == 'sonIguales'){
+                $('<div class="alert alert-warning sonIguales" role="alert">La matrícula nueva es la misma que la actual</div>').insertAfter($("#matriculaAnterior"));
+                $('body,html').animate({scrollTop : 0}, 500);
+                setTimeout(function() {
+                    $(".sonIguales").fadeOut(1500);
+                },10000);
+            } 
+
            
             if(response == true){
                 $("#modalExitoso").modal('show');

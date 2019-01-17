@@ -98,7 +98,7 @@ class ControladorInicioCoordinador extends CI_Controller {
 		if(strlen($matricula) <= 9 && strlen($matricula) > 0){
 			$datos['matricula'] = $matricula;
 			$this->load->view('coordinador/EncabezadoCoordinador');
-			$this->load->view('coordinador/VistaMatricula', $datos);
+			$this->load->view('coordinador/VistaModificarMatricula', $datos);
 			
 		}else{
 			echo "LOS DATOS NO SE RECIBIERON CORRECTAMENTE";
@@ -119,12 +119,13 @@ class ControladorInicioCoordinador extends CI_Controller {
 			$this->form_validation->set_rules('matriculaNueva', 'MatriculaNueva', 'trim|required|min_length[9]|max_length[9]');
 			$this->form_validation->set_rules('matriculaNueva2', 'MatriculaNueva2', 'trim|required|min_length[9]|max_length[9]|matches[matriculaNueva]');			
             if($this->form_validation->run() == TRUE){	
-				if($matriculaAnterior != $matriculaNueva){			
-					if($this->ModeloAlumno->verificarMatricula($matriculaNueva) == "1"){
+				if($matriculaAnterior != $matriculaNueva){	
+										
+					if($this->ModeloAlumno->verificarMatricula($matriculaNueva) == "0"){
 						$this->load->model('ModeloAlumno');  
 						$datos = array(
 							'matricula' => $matriculaNueva
-						);      
+						);     
 						$confirmacion = $this->ModeloAlumno->modificarMatricula($matriculaAnterior, $datos);
 					}else{
 						$confirmacion = "yaExiste";
@@ -142,5 +143,9 @@ class ControladorInicioCoordinador extends CI_Controller {
         echo $confirmacion;
 	}
 
+	public function modificarContrasenaAlumno()
+	{
+		$this->load->view('coordinador/VistaModificarContrasenaAlumno');
+	}
+
 }
-?>	

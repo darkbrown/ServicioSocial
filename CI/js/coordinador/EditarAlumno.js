@@ -141,4 +141,24 @@ $(document).ready(function () {
         window.location.href = base_url + "/ServicioSocial/index.php/CambiarMatricula/" + matricula;    
     });
 
+    $("#cambiarContrasena").click(function(){
+        var matricula = $('#matricula').val().trim();
+        var nombre = $('#nombre').val().trim();
+        var apellidos = $('#apellidos').val().trim();
+       // matricula = encodeURIComponent(btoa(matricula));
+
+       $.ajax({
+        type: "POST",
+        url: base_url + "/ServicioSocial/index.php/ModificarContrasenaAlumno",
+        data: {'matricula': matricula,
+        'nombre': nombre,
+        'apellidos': apellidos
+        },
+         success: function(response){
+            alert(response);
+            $(response);
+         }
+	    });     
+    });
+
 });
