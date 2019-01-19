@@ -90,7 +90,8 @@ $(document).ready(function () {
             'telefono': telefono,
             'matricula': matricula
 		},
-		success: function(response){   
+		success: function(response){  
+            alert(response); 
             $("#modalConfirmacion").modal('hide');
             
             if(response == 'datosInvalidos'){
@@ -108,13 +109,37 @@ $(document).ready(function () {
                 },10000);
             }
             
+            if(response == 'matriculaInvalida'){
+                $('<div class="alert alert-warning matriculaInvalida" role="alert">No se encontro una matrícula</div>').insertAfter($("#matricula"));
+                $('body,html').animate({scrollTop : 0}, 500);
+                setTimeout(function() {
+                    $(".matriculaInvalida").fadeOut(1500);
+                },10000);
+            } 
+
+            if(response == 'yaExisteCorreo'){
+                $('<div class="alert alert-warning yaExisteCorreo" role="alert">Ya existe una cuenta con ese correo electrónico</div>').insertAfter($("#matricula"));
+                $('body,html').animate({scrollTop : 0}, 500);
+                setTimeout(function() {
+                    $(".yaExisteCorreo").fadeOut(1500);
+                },10000);
+            } 
+
             if(response == true){
                 $("#modalExitoso").modal('show');
+            }
+            if(response == 'errorCorreo'){
+                $(".errorCorreo").fadeOut(1500);
+                $('<div class="alert alert-danger errorCorreo" role="alert">Error al modificar el correo</div>').insertAfter($("#matricula"));
+                $('body,html').animate({scrollTop : 0}, 500);
+                setTimeout(function() {
+                    $(".errorCorreo").fadeOut(1500);
+                },10000);
             }
 
             if(response == false){
                 $(".errorAlGuardar").fadeOut(1500);
-                $('<div class="alert alert-danger errorAlGuardar" role="alert">Error al intentar guardar los cambios o no ha realizado modificaciones</div>').insertAfter($("#matricula"));
+                $('<div class="alert alert-warning errorAlGuardar" role="alert">No ha modificado ningún dato</div>').insertAfter($("#matricula"));
                 $('body,html').animate({scrollTop : 0}, 500);
                 setTimeout(function() {
                     $(".errorAlGuardar").fadeOut(1500);

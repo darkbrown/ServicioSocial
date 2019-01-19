@@ -20,9 +20,9 @@ class ControladorInicioCoordinador extends CI_Controller {
 	public function listaAlumnos()
 	{
 		$this->load->model('ModeloAlumno');
-		$data['listaAlumnos'] = $this->ModeloAlumno->obtenerAlumnos();
+		$alumnos['listaAlumnos'] = $this->ModeloAlumno->obtenerAlumnos();
 		$this->load->view('coordinador/EncabezadoCoordinador');
-		$this->load->view('coordinador/VistaListaAlumnos', $data);
+		$this->load->view('coordinador/VistaListaAlumnos', $alumnos);
 	}
 
 	public function editarAlumno($matricula)
@@ -57,17 +57,20 @@ class ControladorInicioCoordinador extends CI_Controller {
 	public function modificarAlumno()
 	{
 		$confirmacion = "";
-        
+		$this->load->model('ModeloAlumno'); 
+		$this->load->model('ModeloUsuario'); 
         if($this->input->post()){
-            $datos = array(
+            $datosAlumno = array(
                 'nombre' => strtoupper($this->input->post('nombre')),
 				'apellidos' => strtoupper($this->input->post('apellidos')),
 				'matricula' => strtoupper($this->input->post('matricula')),				
                 'bloque' => $this->input->post('bloque'),
-                'seccion' => $this->input->post('seccion'),
-                'correo' => strtoupper($this->input->post('correo')),
-                'telefono' => $this->input->post('telefono'),
-            );
+                'seccion' => $this->input->post('seccion'),              
+                'telefono' => $this->input->post('telefono')
+			);
+			$datosUsuario = array(
+				'correo' => strtoupper($this->input->post('correo'))
+			);
             $this->form_validation->set_rules('nombre', 'Nombre', 'trim|required');
 			$this->form_validation->set_rules('apellidos', 'Apellidos', 'trim|required');
 			$this->form_validation->set_rules('matricula', 'Matricula', 'trim|required|min_length[9]|max_length[9]');
@@ -77,17 +80,38 @@ class ControladorInicioCoordinador extends CI_Controller {
             $this->form_validation->set_rules('telefono', 'Telefono', 'trim|required|numeric');
 
             if($this->form_validation->run() == TRUE){
-                
-                    $this->load->model('ModeloAlumno');        
-                    $confirmacion = $this->ModeloAlumno->modificarAlumno($datos); 
-
+				if($this->ModeloAlumno->verificarMatricula($datosAlumno['matricula']) == '1'){
+					$idUsuario = $this->ModeloAlumno->obtenerIdUsuario($datosAlumno['matricula']);
+					if($this->ModeloUsuario->comprobarMismoCorreo($datosUsuario['correo'], $idUsuario) == '1'){
+						$modificacionAlumno = $this->ModeloAlumno->modificarAlumno($datosAlumno);
+						if($modificacionAlumno == true){
+							$confirmacion = true;
+						}else{
+							$confirmacion = false;
+						}
+					}else{
+						if($this->ModeloUsuario->verificarCorreo($datosUsuario['correo']) == '0'){
+							$this->ModeloAlumno->modificarAlumno($datosAlumno);
+							$modificacionUsuario = $this->ModeloUsuario->modificarCorreo($datosUsuario, $idUsuario);
+								if($modificacionUsuario == true){
+									$confirmacion = true;
+								}else{
+									$confirmacion = 'errorCorreo';
+								}
+							
+						}else{
+							$confirmacion = "yaExisteCorreo";
+						}
+					}
+				}else{
+					$confirmacion = "matriculaInvalida";
+				}
             }else{
                 $confirmacion = "datosInvalidos";
             }
         }else{
             $confirmacion =  "vacio";
         }
-
         echo $confirmacion;
 	}
 

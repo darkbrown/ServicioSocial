@@ -41,31 +41,44 @@ class ModeloUsuario extends CI_Model {
     }
 
 
-    
-    
-    
-    public function iniciarSesion($datos)
+    public function obtenerCorreoYEstatus($idUsuario)
     {
-        $usuario = array();
-        $this->db->where('correo', $datos['correo']);
-        $this->db->where('contrasena', $datos['contrasena']);
-        $alumno = $this->db->get('alumno');
-
-        if(count($alumno->result_array())){
-            $usuario = $alumno->result_array();
-        }else{
-            $this->db->where('correo', $datos['correo']);
-            $this->db->where('contrasena', $datos['contrasena']);
-            $coordinador = $this->db->get('coordinador');
-            if(count($coordinador->result_array())){
-                $usuario = $coordinador->result_array();
-            }
-        }
-
-
-        return $usuario;
-
+        $this->db->select('correo', 'estatus');
+        $this->db->where('idUsuario', $idUsuario);
+        return $this->db->get('usuario')->result_array();
     }
 
+    public function verificarCorreo($correo)
+    {
+        $estatus= "0";
+        $this->db->where('correo', $correo);
+        $usuario = $this->db->get('usuario')->result_array();        
+        if(count($usuario) > 0){
+            $estatus = "1";
+        }
+ 
+        return $estatus;
+    }
+
+    public function modificarCorreo($datosUsuario, $idUsuario)
+    {
+        $this->db->where('idUsuario', $idUsuario);
+        $this->db->update('usuario', $datosUsuario);
+        return (bool)($this->db->affected_rows() > 0);
+    }
+
+    public function comprobarMismoCorreo($correo, $idUsuario)
+    {
+        $estatus= "0";
+        $this->db->where('idUsuario', $idUsuario);
+        $usuario = $this->db->get('usuario')->result_array(); 
+        if($usuario[0]['correo'] == $correo){
+            $estatus = "1";
+        }
+        return $estatus;
+    }
+    
+    
+   
 
 }
