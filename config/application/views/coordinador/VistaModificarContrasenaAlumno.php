@@ -3,19 +3,19 @@
 
     <form id="formularioContrasena" name="formularioContrasena" method="post">
         <div class="container col-md-5 border-0" align="center">
-            <label for="nombre">Alumno</label>
-            <input type="text" disabled class="form-control" id="nombre" name="nombre" value="<?php echo $nombre;?>"
+            <label for="matricula">Alumno</label>
+            <input type="text" disabled class="form-control" id="matricula" name="matricula" value="<?php echo $matricula;?>"
                 maxlength="9" required>
         </div>
         <div class="form-row">
             <div class="form-group col-md-5 border-0">
                 <label for="contrasena1">Nueva Contraseña</label>
-                <input type="text" class="form-control" id="contrasena1" name="contrasena1" maxlength="15" value=""
+                <input type="password" class="form-control" id="contrasena1" name="contrasena1" maxlength="15" value=""
                     required>
             </div>
             <div class="form-group col-md-5 border-0">
                 <label for="contrasena2">Confirmar Nueva Contraseña</label>
-                <input type="text" class="form-control" id="contrasena2" name="contrasena2" maxlength="15" value=""
+                <input type="password" class="form-control" id="contrasena2" name="contrasena2" maxlength="15" value=""
                     required>
             </div>
 
@@ -63,4 +63,4 @@
 
 </html>
 
-<script type="text/javascript" src="<?php echo base_url();?>js/EditarContrasenaAlumno.js"></script>
+<script type="text/javascript" src="<?php echo base_url();?>js/coordinador/EditarContrasenaAlumno.js"></script>

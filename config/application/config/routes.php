@@ -60,6 +60,7 @@ $route['Alumnos'] = 'ControladorInicioCoordinador/listaAlumnos';
 $route['EditarAlumno/(:any)'] = 'ControladorInicioCoordinador/editarAlumno/$1';
 $route['CambiarMatricula/(:any)'] = 'ControladorInicioCoordinador/cambiarMatricula/$1';
 $route['ModificarMatricula'] = 'ControladorInicioCoordinador/modificarMatricula';
+$route['CambiarContrasenaAlumno/(:any)'] = 'ControladorInicioCoordinador/cambiarContrasenaAlumno/$1';
 $route['ModificarContrasenaAlumno'] = 'ControladorInicioCoordinador/modificarContrasenaAlumno';
 $route['ModificarAlumno'] = 'ControladorInicioCoordinador/modificarAlumno';
 $route['404_override'] = '';

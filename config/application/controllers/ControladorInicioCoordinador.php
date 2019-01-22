@@ -92,13 +92,12 @@ class ControladorInicioCoordinador extends CI_Controller {
 					}else{
 						if($this->ModeloUsuario->verificarCorreo($datosUsuario['correo']) == '0'){
 							$this->ModeloAlumno->modificarAlumno($datosAlumno);
-							$modificacionUsuario = $this->ModeloUsuario->modificarCorreo($datosUsuario, $idUsuario);
+							$modificacionUsuario = $this->ModeloUsuario->modificarUsuario($datosUsuario, $idUsuario);
 								if($modificacionUsuario == true){
 									$confirmacion = true;
 								}else{
 									$confirmacion = 'errorCorreo';
-								}
-							
+								}							
 						}else{
 							$confirmacion = "yaExisteCorreo";
 						}
@@ -119,19 +118,17 @@ class ControladorInicioCoordinador extends CI_Controller {
 	{
 		$matricula = base64_decode(urldecode($matricula));
 		
-		if(strlen($matricula) <= 9 && strlen($matricula) > 0){
+		if(strlen($matricula) == 9){
 			$datos['matricula'] = $matricula;
 			$this->load->view('coordinador/EncabezadoCoordinador');
-			$this->load->view('coordinador/VistaModificarMatricula', $datos);
-			
+			$this->load->view('coordinador/VistaModificarMatricula', $datos);			
 		}else{
-			echo "LOS DATOS NO SE RECIBIERON CORRECTAMENTE";
+			echo "LOS DATOS NO SE RECIBIERON CORRECTAMENTE O LA MATRÍCULA ES INVÁLIDA";
 		}	
 	}
 
 	public function modificarMatricula()
-	{
-		
+	{		
 		$confirmacion = "";
         
         if($this->input->post()){
@@ -143,10 +140,8 @@ class ControladorInicioCoordinador extends CI_Controller {
 			$this->form_validation->set_rules('matriculaNueva', 'MatriculaNueva', 'trim|required|min_length[9]|max_length[9]');
 			$this->form_validation->set_rules('matriculaNueva2', 'MatriculaNueva2', 'trim|required|min_length[9]|max_length[9]|matches[matriculaNueva]');			
             if($this->form_validation->run() == TRUE){	
-				if($matriculaAnterior != $matriculaNueva){	
-										
-					if($this->ModeloAlumno->verificarMatricula($matriculaNueva) == "0"){
-						$this->load->model('ModeloAlumno');  
+				if($matriculaAnterior != $matriculaNueva){											
+					if($this->ModeloAlumno->verificarMatricula($matriculaNueva) == "0"){ 
 						$datos = array(
 							'matricula' => $matriculaNueva
 						);     
@@ -167,9 +162,62 @@ class ControladorInicioCoordinador extends CI_Controller {
         echo $confirmacion;
 	}
 
-	public function modificarContrasenaAlumno()
+	public function cambiarContrasenaAlumno($matricula)
 	{
-		$this->load->view('coordinador/VistaModificarContrasenaAlumno');
+		$matricula = base64_decode(urldecode($matricula));
+		
+		if(strlen($matricula) == 9){
+			$datos['matricula'] = $matricula;
+			$this->load->view('coordinador/EncabezadoCoordinador');
+			$this->load->view('coordinador/VistaModificarContrasenaAlumno', $datos);		
+		}else{
+			echo "LOS DATOS NO SE RECIBIERON CORRECTAMENTE O LA MATRÍCULA ES INVÁLIDA";
+		}	
+		
+	}
+
+
+	public function modificarContrasenaAlumno()
+	{		
+		$confirmacion = "";
+        
+        if($this->input->post()){
+			$this->load->model('ModeloAlumno'); 
+			$this->load->model('ModeloUsuario'); 
+            $matricula = strtoupper($this->input->post('matricula'));
+			$contrasena1 = strtoupper($this->input->post('contrasena1'));
+			$contrasena2 = strtoupper($this->input->post('contrasena2'));
+            $this->form_validation->set_rules('matricula', 'Matricula', 'trim|required|min_length[9]|max_length[9]');
+			$this->form_validation->set_rules('contrasena1', 'Contrasena1', 'trim|required|min_length[6]|max_length[15]');
+            $this->form_validation->set_rules('contrasena2', 'Contrasena2', 'trim|required|matches[contrasena1]');
+            if($this->form_validation->run() == TRUE){	
+				if($this->ModeloAlumno->verificarMatricula($matricula) == "1"){
+					$idUsuario = $this->ModeloAlumno->obtenerIdUsuario($matricula);
+					$usuario = $this->ModeloUsuario->obtenerContrasena($idUsuario);
+					if(count($usuario) > 0){
+						$contrasenaNueva = hash("sha256", $contrasena1);
+						if($usuario[0]['contrasena'] != $contrasenaNueva){
+							$datosUsuario = array(
+								'contrasena' => $contrasenaNueva
+							);
+							$confirmacion = $this->ModeloUsuario->modificarUsuario($datosUsuario, $idUsuario);
+						}else{
+							$confirmacion = true;
+						}
+					}else{
+						$confirmacion = "noExiste";
+					}
+				}else{
+					$confirmacion = "matriculaInvalida";
+				}	
+            }else{
+                $confirmacion = "datosInvalidos";
+            }
+        }else{
+            $confirmacion = "vacio";
+        }
+
+        echo $confirmacion;
 	}
 
 }

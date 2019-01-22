@@ -60,7 +60,7 @@ class ModeloUsuario extends CI_Model {
         return $estatus;
     }
 
-    public function modificarCorreo($datosUsuario, $idUsuario)
+    public function modificarUsuario($datosUsuario, $idUsuario)
     {
         $this->db->where('idUsuario', $idUsuario);
         $this->db->update('usuario', $datosUsuario);
@@ -76,6 +76,13 @@ class ModeloUsuario extends CI_Model {
             $estatus = "1";
         }
         return $estatus;
+    }
+
+    public function obtenerContrasena($idUsuario)
+    {
+        $this->db->select('contrasena');
+        $this->db->where('idUsuario', $idUsuario);
+        return $this->db->get('usuario')->result_array();
     }
     
     
