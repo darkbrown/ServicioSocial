@@ -7,14 +7,14 @@ class ControladorSolicitarRegistro extends CI_Controller {
 	public function index()
 	{
         $this->load->view('EncabezadoVacio');
-		$this->load->view('VistaSolicitarRegistro');
+		$this->load->view('registro/VistaSolicitarRegistro');
     }
     
 
     public function formularioAlumno()
     {
         $this->load->view('EncabezadoVacio');
-		$this->load->view('alumno/VistaRegistrarAlumno');
+		$this->load->view('registro/VistaRegistrarAlumno');
     }
 
     public function registrarAlumno()
@@ -72,6 +72,12 @@ class ControladorSolicitarRegistro extends CI_Controller {
         }
 
         echo $confirmacion;
+    }
+
+    public function formularioDependencia()
+    {
+        $this->load->view('EncabezadoVacio');
+		$this->load->view('registro/VistaRegistrarDependencia');
     }
 }
 ?>

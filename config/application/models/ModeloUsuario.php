@@ -84,6 +84,14 @@ class ModeloUsuario extends CI_Model {
         $this->db->where('idUsuario', $idUsuario);
         return $this->db->get('usuario')->result_array();
     }
+
+
+    public function obtenerEstatus($idUsuario)
+    {
+        $this->db->select('estatus');
+        $this->db->where('idUsuario', $idUsuario);
+        return $this->db->get('usuario')->result_array();
+    }
     
     
    

@@ -82,6 +82,7 @@ $(document).ready(function () {
             }
         },
         submitHandler: function(){
+           // $("#modalConfirmacion").show();
             $('#modalConfirmacion').modal('show');
         }
     });
@@ -104,7 +105,7 @@ $(document).ready(function () {
         var contrasena2 = $("#contrasena2").val().trim();    
 		$.ajax({
 			type: "POST",
-			url: base_url + "/ServicioSocial/index.php/RegistrarAlumno",
+			url: base_url + "/ServicioSocial/index.php/RegistrarAlumnoCoordinador",
 			data: {'nombre': nombre,
             'apellidos': apellidos,
             'matricula': matricula,
@@ -158,7 +159,7 @@ $(document).ready(function () {
     });
 
     $("#botonCerrar").click(function(){
-        window.location.href = base_url + "/ServicioSocial/";
+        window.location.href = base_url + "/ServicioSocial/index.php/Alumnos";
     });
 
     $("#telefono").keypress(function(e){

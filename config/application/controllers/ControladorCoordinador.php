@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class ControladorInicioCoordinador extends CI_Controller {
+class ControladorCoordinador extends CI_Controller {
 
 	public function __construct()
     {
@@ -219,5 +219,138 @@ class ControladorInicioCoordinador extends CI_Controller {
 
         echo $confirmacion;
 	}
+
+
+	public function modificarEstatusAlumno()
+	{
+		$confirmacion = "";
+		if($this->input->post()){
+			$this->load->model('ModeloAlumno'); 
+			$this->load->model('ModeloUsuario'); 
+            $matricula = strtoupper($this->input->post('matricula'));
+            $this->form_validation->set_rules('matricula', 'Matricula', 'trim|required|min_length[9]|max_length[9]');
+            if($this->form_validation->run() == TRUE){	
+				if($this->ModeloAlumno->verificarMatricula($matricula) == "1"){
+					$idUsuario = $this->ModeloAlumno->obtenerIdUsuario($matricula);
+					$usuario = $this->ModeloUsuario->obtenerEstatus($idUsuario);
+					if(count($usuario) > 0){
+						if($usuario[0]['estatus'] == 'ACTIVO'){
+							$datosUsuario = array(
+								'estatus' => 'SUSPENDIDO'
+							);
+							$confirmacion = $this->ModeloUsuario->modificarUsuario($datosUsuario, $idUsuario);
+						}elseif($usuario[0]['estatus'] == 'SUSPENDIDO'){
+							$datosUsuario = array(
+								'estatus' => 'ACTIVO'
+							);
+							$confirmacion = $this->ModeloUsuario->modificarUsuario($datosUsuario, $idUsuario);
+						}
+					}else{
+						$confirmacion = "noExiste";
+					}
+				}else{
+					$confirmacion = "matriculaInvalida";
+				}	
+            }else{
+                $confirmacion = "datosInvalidos";
+            }
+        }else{
+            $confirmacion = "vacio";
+        }
+
+        echo $confirmacion;
+	}
+
+	public function consultarAlumno($matricula)
+	{
+		$matricula = base64_decode(urldecode($matricula));
+		
+		if(strlen($matricula) <= 9 && strlen($matricula) > 0){
+			$this->load->model('ModeloAlumno');
+			$alumno =  $this->ModeloAlumno->obtenerAlumno($matricula);
+			
+			if(count($alumno)){
+				$datos = array(
+					'nombre' => $alumno[0]['nombre'],
+					'apellidos' => $alumno[0]['apellidos'],
+					'matricula' => $alumno[0]['matricula'],
+					'bloque' => $alumno[0]['bloque'],
+					'seccion' => $alumno[0]['seccion'],
+					'correo' => $alumno[0]['correo'],
+					'telefono' => $alumno[0]['telefono'],
+				);
+
+				$this->load->view('coordinador/EncabezadoCoordinador');
+				$this->load->view('coordinador/VistaConsultarAlumno', $datos);
+			}else{
+				echo "RECURSO NO DISPONIBLE PARA EDICIÓN";
+			}
+		}else{
+			echo "LOS DATOS NO SE RECIBIERON CORRECTAMENTE";
+		}	
+	}
+
+	public function formularioAlumno()
+    {
+        $this->load->view('coordinador/EncabezadoCoordinador');
+		$this->load->view('coordinador/VistaRegistrarAlumnoCoordinador');
+    }
+
+    public function registrarAlumnoCoordinador()
+    {
+        $confirmacion = "";
+        
+        if($this->input->post()){
+            $alumno = array(
+                'nombre' => strtoupper($this->input->post('nombre')),
+                'apellidos' => strtoupper($this->input->post('apellidos')),
+                'matricula' => strtoupper($this->input->post('matricula')),
+                'bloque' => $this->input->post('bloque'),
+                'seccion' => $this->input->post('seccion'),               
+                'telefono' => $this->input->post('telefono')
+            );
+            $contrasena = $this->input->post('contrasena');
+            $usuario = array(                
+                'correo' => strtoupper($this->input->post('correo'))
+            );
+            $this->form_validation->set_rules('nombre', 'Nombre', 'trim|required');
+            $this->form_validation->set_rules('apellidos', 'Apellidos', 'trim|required');
+            $this->form_validation->set_rules('matricula', 'Matricula', 'trim|required|min_length[9]|max_length[9]');
+            $this->form_validation->set_rules('matricula2', 'Matricula2', 'trim|required|matches[matricula]');
+            $this->form_validation->set_rules('bloque', 'Bloque', 'trim|required|numeric');
+            $this->form_validation->set_rules('seccion', 'Seccion', 'trim|required|numeric');
+            $this->form_validation->set_rules('correo', 'Correo', 'trim|required|valid_email');
+            $this->form_validation->set_rules('telefono', 'Telefono', 'trim|required|numeric');
+            $this->form_validation->set_rules('contrasena', 'Contrasena', 'trim|required|min_length[6]|max_length[15]');
+            $this->form_validation->set_rules('contrasena2', 'Contrasena2', 'trim|required|matches[contrasena]');
+
+            if($this->form_validation->run() == TRUE){
+                $this->form_validation->set_rules('matricula', 'Matricula', 'trim|required|min_length[9]|max_length[9]|is_unique[alumno.matricula]');
+                $this->form_validation->set_rules('correo', 'Correo', 'trim|required|valid_email|is_unique[usuario.correo]');
+                if($this->form_validation->run() == TRUE){
+                    $this->load->model('ModeloUsuario');                   
+                    $usuario['contrasena'] = hash("sha256", $contrasena);
+                    $usuario['tipo'] = 'ALUMNO';
+                    $usuario['estatus'] = 'ACTIVO';
+                    $resultado = $this->ModeloUsuario->registrarUsuario($usuario);
+                    if($resultado['respuesta'] == '1'){
+                        $alumno['Usuario_idUsuario'] = $resultado['idUsuario'];
+                        $this->load->model('ModeloAlumno');                        
+                        $confirmacion = $this->ModeloAlumno->registrarAlumno($alumno);                           
+                    }else{
+                        $confirmacion = "error";
+                    }
+                }else{
+                    $confirmacion = "yaExiste";
+                }               
+            }else{
+                $confirmacion = "datosInvalidos";
+            }
+        }else{
+            $confirmacion =  "vacio";
+        }
+
+        echo $confirmacion;
+    }
 
 }

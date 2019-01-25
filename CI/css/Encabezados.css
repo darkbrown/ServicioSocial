@@ -54,3 +54,8 @@ form label.error {
 	display: block;
 	float: right
  }
+
+
+.table-responsive{
+	overflow: auto;
+}

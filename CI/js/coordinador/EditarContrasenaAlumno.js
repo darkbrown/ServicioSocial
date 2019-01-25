@@ -127,9 +127,6 @@ $(document).ready(function () {
     });
  
 
-    $("#botonCerrar").click(function(){
-        
-    });
 
 
 //----MENSAJE CUANDO COINCIDEN LAS CONTRASEÑAS-----
