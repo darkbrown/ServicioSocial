@@ -57,6 +57,7 @@ $route['FormularioAlumno'] = 'ControladorSolicitarRegistro/formularioAlumno';
 $route['FormularioDependencia'] = 'ControladorSolicitarRegistro/formularioDependencia';
 $route['iniciarSesion'] = 'ControladorIniciarSesion/iniciarSesion';
 $route['RegistrarAlumno'] = '/ControladorSolicitarRegistro/registrarAlumno';
+$route['RegistrarDependencia'] = '/ControladorSolicitarRegistro/registrarDependencia';
 $route['tipoCuenta'] = '/ControladorSolicitarRegistro/index';
 
 

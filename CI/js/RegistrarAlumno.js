@@ -46,6 +46,8 @@ $(document).ready(function () {
                 normalizer: function (value) {
                     return $.trim(value);
                 },
+                minlength: 6,
+                maxlength: 15,
                 equalTo: "#contrasena"
             }
 			
@@ -78,6 +80,8 @@ $(document).ready(function () {
             },
             contrasena2: {
                 required: "Dato requerido",
+                minlength: "La contraseña debe tener entre 6 y 15 caracteres",
+                maxlength: "La contraseña debe tener entre 6 y 15 caracteres",
                 equalTo: "La contraseña no coincide"
             }
         },
@@ -168,20 +172,7 @@ $(document).ready(function () {
         return /\d/.test(String.fromCharCode(keynum));
     });
 
-    function coincideMatricula() {
-		var valor1 = matricula1.val().trim();
-		var valor2 = matricula2.val().trim();
-		//muestro el span
-		spanMatricula2.show().removeClass();
-		//condiciones dentro de la función
-		if (valor1 != valor2) {
-			spanMatricula2.text(negacionMatricula).addClass('negacion');
-		}
-		if (valor1.length != 0 && valor1 == valor2) {
-			spanMatricula2.text(confirmarMatricula).removeClass("negacion").addClass('confirmacion');
-		}
-    }
-    
+  
     //----MENSAJE CUANDO COINCIDEN LAS MATRICULAS-----
 
     var matricula1 = $('[name=matricula]');

@@ -4,74 +4,152 @@
         <div class="form-group col-md-10 border-0">
             <h5>Datos de la institución/dependencia a la que perteneces:</h5>
             <p>Favor de llenar los campos correctamente, una vez registrados no podrá cambiarlos por su cuenta. Será
-                necesario ponerse en contacto con el coordinador de servicio socia</p>
+                necesario ponerse en contacto con el Coordinador de Servicio Social</p>
         </div>
     </div>
-    <form id="formularioAlumno" name="formularioAlumno" method="post">
+    <form id="formularioDependencia" name="formularioDependencia" method="post">
         <div class="form-row">
             <div class="form-group col-md-5 border-0">
-                <label for="nombre">Nombre(s)</label>
-                <input type="text" class="form-control" id="nombre" name="nombre" value="CRISTIAN" required>
-            </div>
-            <div class="form-group col-md-5 border-0">
-                <label for="apellidos">Apellidos</label>
-                <input type="text" class="form-control" id="apellidos" name="apellidos" value="MENDOZA" required>
-            </div>
-            <div class="form-group col-md-5 border-0">
-                <label for="matricula">Matrícula</label>
-                <input type="text" class="form-control" id="matricula" name="matricula" value="S14011620" maxlength="9"
+                <label for="nombreDependencia">Nombre de la Dependencia</label>
+                <input type="text" class="form-control" id="nombreDependencia" name="nombreDependencia" value="mi dependencia"
                     required>
             </div>
             <div class="form-group col-md-5 border-0">
-                <label for="matricula2">Confirmar Matrícula</label>
-                <input type="text" class="form-control" id="matricula2" name="matricula2" value="S14011620" maxlength="9"
+                <label for="sectorDependencia">Sector</label>
+                <select id="sectorDependencia" class="form-control" name="sectorDependencia" required>
+                    <option value="">---------</option>
+                    <option value="público" selected>Público</option>
+                    <option value="privado">Privado</option>
+                </select>
+            </div>
+            <div class="form-group col-md-3 mb-2 border-0">
+                <label for="telefonoDependencia">LADA + Teléfono</label>
+                <input type="tel" class="form-control" id="telefonoDependencia" name="telefonoDependencia" value="1010101454"
+                    required>
+            </div>
+            <div class="form-group col-md-2 mb-2 border-0">
+                <label for="extDependencia">Ext.</label>
+                <input type="tel" class="form-control" id="extDependencia" name="extDependencia" value="156">
+            </div>
+            <div class="form-group col-md-5 border-0">
+                <label for="correoDependencia">Correo Electrónico</label>
+                <input type="email" class="form-control" id="correoDependencia" name="correoDependencia" value="dependencia@gmail.com"
+                    required>
+            </div>
+            <div class="form-group col-md-3 mb-2 border-0">
+                <label for="estadoRepublica">Estado</label>
+                <select id="estadoRepublica" class="form-control" name="estadoRepublica" required>
+                    <option value="">---------</option>
+                    <option value="Aguascalientes">Aguascalientes</option>
+                    <option value="Baja California">Baja California</option>
+                    <option value="Baja California Sur">Baja California Sur</option>
+                    <option value="Campeche">Campeche</option>
+                    <option value="Chiapas">Chiapas</option>
+                    <option value="Chihuahua">Chihuahua</option>
+                    <option value="Coahuila">Coahuila</option>
+                    <option value="Colima" selected>Colima</option>
+                    <option value="Distrito Federal">Distrito Federal</option>
+                    <option value="Durango">Durango</option>
+                    <option value="Estado de México">Estado de México</option>
+                    <option value="Guanajuato">Guanajuato</option>
+                    <option value="Guerrero">Guerrero</option>
+                    <option value="Hidalgo">Hidalgo</option>
+                    <option value="Jalisco">Jalisco</option>
+                    <option value="Michoacán">Michoacán</option>
+                    <option value="Morelos">Morelos</option>
+                    <option value="Nayarit">Nayarit</option>
+                    <option value="Nuevo León">Nuevo León</option>
+                    <option value="Oaxaca">Oaxaca</option>
+                    <option value="Puebla">Puebla</option>
+                    <option value="Querétaro">Querétaro</option>
+                    <option value="Quintana Roo">Quintana Roo</option>
+                    <option value="San Luis Potosí">San Luis Potosí</option>
+                    <option value="Sinaloa">Sinaloa</option>
+                    <option value="Sonora">Sonora</option>
+                    <option value="Tabasco">Tabasco</option>
+                    <option value="Tamaulipas">Tamaulipas</option>
+                    <option value="Tlaxcala">Tlaxcala</option>
+                    <option value="Veracruz">Veracruz</option>
+                    <option value="Yucatán">Yucatán</option>
+                    <option value="Zacatecas">Zacatecas</option>
+                </select>
+            </div>
+            <div class="form-group col-md-2 mb-2 border-0">
+                <label for="cpDependencia">C.P.</label>
+                <input type="text" class="form-control" id="cpDependencia" name="cpDependencia" value="12345" minlength="5" maxlength="5" required>
+            </div>
+            <div class="form-group col-md-5 border-0">
+                <label for="ciudadDependencia">Ciudad</label>
+                <input type="text" class="form-control" id="ciudadDependencia" name="ciudadDependencia" value="xalapa"
                     required>
             </div>
             <div class="form-group col-md-5 border-0">
-                <label for="bloque">Bloque (Semestre)</label>
-                <select id="bloque" class="form-control" name="bloque" required>
-                    <option value="">---------</option>
-                    <option value="1" selected>1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
-                    <option value="13">13</option>
-                </select>
+                <label for="direccionDependencia">Dirección</label>
+                <input type="text" class="form-control" id="direccionDependencia" name="direccionDependencia" value="Av. miradores"
+                    required>
+            </div>
+            <div class="form-group col-md-3 border-0">
+                <label for="numExterior">Núm. Exterior (0 = sin número)</label>
+                <input type="text" class="form-control" id="numExterior" name="numExterior" value="5" required>
+            </div>
+            <div class="form-group col-md-2 border-0">
+                <label for="numInterior">Núm. Interior</label>
+                <input type="text" class="form-control" id="numInterior" name="numInterior" value="20">
             </div>
             <div class="form-group col-md-5 border-0">
-                <label for="seccion">Sección (Turno)</label>
-                <select id="seccion" class="form-control" name="seccion" required>
-                    <option value="">---------</option>
-                    <option value="1">1 (Mañana)</option>
-                    <option value="2" selected>2 (Tarde)</option>
-                    <option value="3">3 (Sabatino)</option>
-                </select>
+                <label for="usuariosDirectos">Usuarios Directos</label>
+                <input type="text" class="form-control" id="usuariosDirectos" name="usuariosDirectos" value="1500" required>
             </div>
             <div class="form-group col-md-5 border-0">
-                <label for="correo">Correo Electrónico</label>
-                <input type="email" class="form-control" id="correo" name="correo" value="prueba@gmail.com" required>
+                <label for="usuariosIndirectos">Usuarios Indirectos</label>
+                <input type="text" class="form-control" id="usuariosIndirectos" name="usuariosIndirectos" value="2000"
+                    required>
+            </div>
+            <div class="form-group col-md-10 border-0">
+                <h5>Datos del responsable a cargo de los proyectos:</h5>
             </div>
             <div class="form-group col-md-5 border-0">
-                <label for="telefono">Teléfono</label>
-                <input type="tel" class="form-control" id="telefono" name="telefono" value="454654512" required>
+                <label for="nombreResponsable">Nombre(s)</label>
+                <input type="text" class="form-control" id="nombreResponsable" name="nombreResponsable" value="miguel"
+                    required>
             </div>
             <div class="form-group col-md-5 border-0">
-                <label for="contrasena">Contraseña</label>
-                <input type="password" class="form-control" name="contrasena" id="contrasena" minlength="6" maxlength="15"
-                    value="123456" required>
+                <label for="apellidosResponsable">Apellidos</label>
+                <input type="text" class="form-control" id="apellidosResponsable" name="apellidosResponsable" value="hidalgo"
+                    required>
             </div>
             <div class="form-group col-md-5 border-0">
-                <label for="contrasena2">Confirmar Contraseña</label>
-                <input type="password" class="form-control" id="contrasena2" name="contrasena2" minlength="6" maxlength="15"
-                    value="123456" required>
+                <label for="cargoResponsable">Cargo</label>
+                <input type="text" class="form-control" id="cargoResponsable" name="cargoResponsable" value="el mero jefe" required>
+            </div>
+            <div class="form-group col-md-3 border-0">
+                <label for="telefonoResponsable">LADA + Teléfono</label>
+                <input type="tel" class="form-control" id="telefonoResponsable" name="telefonoResponsable" value="5646546"
+                    required>
+            </div>
+            <div class="form-group col-md-2 mb-2 border-0">
+                <label for="extResponsable">Ext.</label>
+                <input type="tel" class="form-control" id="extResponsable" name="extResponsable" value="">
+            </div>
+            <div class="form-group col-md-5 border-0">
+                <label for="correoResponsable1">Correo Electrónico</label>
+                <input type="email" class="form-control" id="correoResponsable1" name="correoResponsable1" value="correo@gmail.com"
+                    required>
+            </div>
+            <div class="form-group col-md-5 border-0">
+                <label for="correoResponsable2">Confirmar Correo Electrónico</label>
+                <input type="email" class="form-control" id="correoResponsable2" name="correoResponsable2" value="correo@gmail.com"
+                    required>
+            </div>
+            <div class="form-group col-md-5 border-0">
+                <label for="contrasenaResponsable1">Contraseña</label>
+                <input type="password" class="form-control" name="contrasenaResponsable1" id="contrasenaResponsable1"
+                    minlength="6" maxlength="15" value="123456" required>
+            </div>
+            <div class="form-group col-md-5 border-0">
+                <label for="contrasenaResponsable2">Confirmar Contraseña</label>
+                <input type="password" class="form-control" id="contrasenaResponsable2" name="contrasenaResponsable2"
+                    minlength="6" maxlength="15" value="123456" required>
             </div>
         </div>
         <div class="row">
