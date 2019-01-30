@@ -1,92 +1,20 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class ControladorSolicitarRegistro extends CI_Controller {
+class ControladorResponsable extends CI_Controller {
 
+	public function __construct()
+    {
+        parent::__construct();
+		$this->load->helper('url_helper');
+    }
 
 	public function index()
 	{
-        $this->load->view('EncabezadoVacio');
-		$this->load->view('registro/VistaSolicitarRegistro');
-    }
-    
+		
+	}
 
-    public function formularioAlumno($usuario)
-    {
-        if($usuario == 'nuevo'){
-            $this->load->view('EncabezadoVacio');
-        }elseif($usuario =='coordinador'){
-            $this->load->view('coordinador/EncabezadoCoordinador');
-        }      
-		$this->load->view('registro/VistaRegistrarAlumno');
-    }
-
-    public function registrarAlumno()
-    {
-        $confirmacion = "";
-        if($this->input->post()){
-            $usuarioActual = $this->input->post('usuarioActual');
-            if($usuarioActual == 'SS: Coordinador'){
-                $confirmacion = 'coordinador';
-            }elseif($usuarioActual == 'LIS | ServicioSocial'){
-                $confirmacion = 'nuevo';
-            }else{
-                $confirmacion = "datosInvalidos";
-            }
-        
-            $alumno = array(
-                'nombre' => mb_strtoupper($this->input->post('nombre')),
-                'apellidos' => mb_strtoupper($this->input->post('apellidos')),
-                'matricula' => mb_strtoupper($this->input->post('matricula')),
-                'bloque' => $this->input->post('bloque'),
-                'seccion' => $this->input->post('seccion'),               
-                'telefono' => $this->input->post('telefono')
-            );
-            $contrasena = $this->input->post('contrasena');
-            $usuario = array(                
-                'correo' => mb_strtoupper($this->input->post('correo')),
-                'tipo' => 'ALUMNO',
-                'contrasena' => hash("sha256", $contrasena),
-                'estatus' => 'ACTIVO'
-            );
-            $this->form_validation->set_rules('nombre', 'Nombre', 'trim|required|max_length[60]');
-            $this->form_validation->set_rules('apellidos', 'Apellidos', 'trim|required|max_length[60]');
-            $this->form_validation->set_rules('matricula', 'Matricula', 'trim|required|min_length[9]|max_length[9]');
-            $this->form_validation->set_rules('matricula2', 'Matricula2', 'trim|required|matches[matricula]');
-            $this->form_validation->set_rules('bloque', 'Bloque', 'trim|required|numeric|max_length[2]');
-            $this->form_validation->set_rules('seccion', 'Seccion', 'trim|required|numeric|max_length[2]');
-            $this->form_validation->set_rules('correo', 'Correo', 'trim|required|valid_email|max_length[320]');
-            $this->form_validation->set_rules('telefono', 'Telefono', 'trim|required|numeric|max_length[30]');
-            $this->form_validation->set_rules('contrasena', 'Contrasena', 'trim|required|min_length[6]|max_length[15]');
-            $this->form_validation->set_rules('contrasena2', 'Contrasena2', 'trim|required|matches[contrasena]');
-
-            if($this->form_validation->run() == TRUE && $confirmacion != 'datosInvalidos'){
-                $this->form_validation->set_rules('matricula', 'Matricula', 'trim|required|min_length[9]|max_length[9]|is_unique[alumno.matricula]');
-                $this->form_validation->set_rules('correo', 'Correo', 'trim|required|valid_email|is_unique[usuario.correo]');
-                if($this->form_validation->run() == TRUE){
-                    $this->load->model('ModeloUsuario');                   
-                    $resultado = $this->ModeloUsuario->registrarUsuario($usuario);
-                    if($resultado['respuesta'] == '1'){
-                        $alumno['Usuario_idUsuario'] = $resultado['idUsuario'];
-                        $this->load->model('ModeloAlumno');                        
-                        $this->ModeloAlumno->registrarAlumno($alumno);                           
-                    }else{
-                        $confirmacion = "error";
-                    }
-                }else{
-                    $confirmacion = "yaExiste";
-                }               
-            }else{
-                $confirmacion = "datosInvalidos";
-            }
-        }else{
-            $confirmacion =  "vacio";
-        }
-
-        echo $confirmacion;
-    }
-
-    public function formularioDependencia()
+	public function formularioDependencia()
     {
         $this->load->view('EncabezadoVacio');
 		$this->load->view('registro/VistaRegistrarDependencia');
@@ -180,4 +108,3 @@ class ControladorSolicitarRegistro extends CI_Controller {
     }
 
 }
-?>

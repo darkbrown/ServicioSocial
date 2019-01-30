@@ -15,6 +15,12 @@ class ControladorIniciarSesion extends CI_Controller {
 		$this->load->view('VistaIniciarSesion');
 	}
 
+	public function seleccionarNuevaCuenta()
+	{
+        $this->load->view('EncabezadoVacio');
+		$this->load->view('registro/VistaSeleccionarCuenta');
+    }
+
 	public function iniciarSesion()
 	{
 		$confirmacion = "dsads";

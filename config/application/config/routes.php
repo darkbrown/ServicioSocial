@@ -51,30 +51,33 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $route['default_controller'] = 'ControladorIniciarSesion';
 
-/** REGISTRO E INICIO DE SESIÓN*/
+/**ESTOS ROUTES ESTAN ORDENADOS DE ACUERDO A LOS QUE USA CADA USUARIO */
 
-$route['FormularioAlumno/(:any)'] = 'ControladorSolicitarRegistro/formularioAlumno/$1';
-$route['FormularioDependencia'] = 'ControladorSolicitarRegistro/formularioDependencia';
+/** REGISTRO E INICIO DE SESIÓN*/
 $route['iniciarSesion'] = 'ControladorIniciarSesion/iniciarSesion';
-$route['RegistrarAlumno'] = '/ControladorSolicitarRegistro/registrarAlumno';
-$route['RegistrarDependencia'] = '/ControladorSolicitarRegistro/registrarDependencia';
-$route['tipoCuenta'] = '/ControladorSolicitarRegistro/index';
+$route['tipoCuenta'] = '/ControladorIniciarSesion/seleccionarNuevaCuenta';
+
+$route['FormularioAlumno/(:any)'] = 'ControladorAlumno/formularioAlumno/$1';//+Coordinador
+$route['FormularioDependencia'] = 'ControladorResponsable/formularioDependencia';
+
+$route['RegistrarAlumno'] = '/ControladorAlumno/registrarAlumno'; //+Coordinador
+$route['RegistrarDependencia'] = '/ControladorResponsable/registrarDependencia';
+
 
 
 /**COORDINADOR */
 $route['Coordinador'] = 'ControladorCoordinador/index';
-$route['FormularioAlumnoCoordinador'] = 'ControladorCoordinador/formularioAlumno';
-$route['RegistrarAlumnoCoordinador'] = '/ControladorCoordinador/registrarAlumnoCoordinador';
-$route['Alumnos'] = 'ControladorCoordinador/listaAlumnos';
+$route['FormularioAlumnoCoordinador'] = 'ControladorAlumno/formularioAlumno';
+$route['Alumnos'] = 'ControladorAlumno/listaAlumnos';
 $route['Responsables'] = 'ControladorCoordinador/listaResponsables';
-$route['EditarAlumno/(:any)'] = 'ControladorCoordinador/editarAlumno/$1';
-$route['ConsultarAlumno/(:any)'] = 'ControladorCoordinador/consultarAlumno/$1';
-$route['CambiarMatricula/(:any)'] = 'ControladorCoordinador/cambiarMatricula/$1';
-$route['ModificarMatricula'] = 'ControladorCoordinador/modificarMatricula';
-$route['CambiarContrasenaAlumno/(:any)'] = 'ControladorCoordinador/cambiarContrasenaAlumno/$1';
-$route['ModificarContrasenaAlumno'] = 'ControladorCoordinador/modificarContrasenaAlumno';
-$route['ModificarAlumno'] = 'ControladorCoordinador/modificarAlumno';
-$route['ModificarEstatusAlumno'] = 'ControladorCoordinador/modificarEstatusAlumno';
+$route['EditarAlumno/(:any)'] = 'ControladorAlumno/editarAlumno/$1';
+$route['ConsultarAlumno/(:any)'] = 'ControladorAlumno/consultarAlumno/$1';
+$route['CambiarMatricula/(:any)'] = 'ControladorAlumno/cambiarMatricula/$1';
+$route['ModificarMatricula'] = 'ControladorAlumno/modificarMatricula';
+$route['CambiarContrasenaAlumno/(:any)'] = 'ControladorAlumno/cambiarContrasenaAlumno/$1';
+$route['ModificarContrasenaAlumno'] = 'ControladorAlumno/modificarContrasenaAlumno';
+$route['ModificarAlumno'] = 'ControladorAlumno/modificarAlumno';
+$route['ModificarEstatusAlumno'] = 'ControladorAlumno/modificarEstatusAlumno';
 
 /** ALUMNO */
 $route['inicioAlumno'] = 'ControladorAlumno/index';
