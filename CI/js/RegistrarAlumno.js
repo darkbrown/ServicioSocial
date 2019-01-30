@@ -1,18 +1,21 @@
 $(document).ready(function () {
     var base_url = window.location.origin;
+    var usuario = "";
     $("#formularioAlumno").validate({
 		rules: {
             nombre: { 
                 required: true,
                 normalizer: function (value) {
                     return $.trim(value);
-                }          
+                },
+                maxlength: 60          
             },
             apellidos: {
                 required: true,
                 normalizer: function (value) {
                     return $.trim(value);
-                }
+                },
+                maxlength: 60
             },
             matricula: {
                 required: true,
@@ -27,12 +30,14 @@ $(document).ready(function () {
                 normalizer: function (value) {
                     return $.trim(value);
                 },
+                minlength: 9,
+                maxlength: 9,
                 equalTo: "#matricula"
             },
             bloque: { required:true},
             seccion: { required:true},
-			correo: { required:true, email: true},
-			telefono: { required:true},
+			correo: { required:true, email: true, maxlength: 320},
+			telefono: { required:true, maxlength: 30 },
             contrasena: {
                 required: true,
                 normalizer: function (value) {
@@ -54,9 +59,13 @@ $(document).ready(function () {
 		},
 		messages: {
             nombre: {
-                required: "Dato requerido"
+                required: "Dato requerido",
+                maxlength: "No debe exeder los 60 carácteres"
             },
-            apellidos: "Dato requerido",
+            apellidos: {
+                required: "Dato requerido",
+                maxlength: "No debe exeder los 60 carácteres"
+            },    
             matricula: {
                 required: "Dato requerido",
                 minlength: "La matrícula debe ser de 9 carácteres",
@@ -64,13 +73,16 @@ $(document).ready(function () {
             },
             matricula2: {
                 required: "Dato requerido",
-                equalTo: "La matrícula no coincide"
+                equalTo: "La matrícula no coincide",
+                minlength: "La matrícula debe ser de 9 carácteres",
+                maxlength: "La matrícula debe ser de 9 carácteres"
             },
             bloque: "Selecciona un bloque",
             seccion: "Selecciona una sección",
 			correo : {
                 required: "Dato requerido",
-                email: "Ingrese una dirección de correo válida"
+                email: "Ingrese una dirección de correo válida",
+                maxlength: "No debe exeder los 320 carácteres"
             },
 			telefono : "Dato requerido",
 			contrasena: {
@@ -105,7 +117,8 @@ $(document).ready(function () {
 		var correo = $("#correo").val().trim();
 		var telefono = $("#telefono").val().trim();
         var contrasena = $("#contrasena").val().trim();    
-        var contrasena2 = $("#contrasena2").val().trim();    
+        var contrasena2 = $("#contrasena2").val().trim();
+        var usuarioActual = document.title;
 		$.ajax({
 			type: "POST",
 			url: base_url + "/ServicioSocial/index.php/RegistrarAlumno",
@@ -118,7 +131,8 @@ $(document).ready(function () {
 			'correo': correo,
 			'telefono': telefono,
             'contrasena': contrasena,
-            'contrasena2': contrasena2
+            'contrasena2': contrasena2,
+            'usuarioActual': usuarioActual
 		},
 		success: function(response){   
             alert(response); 
@@ -154,7 +168,12 @@ $(document).ready(function () {
                 },10000);
             }
             
-            if(response == '1'){
+            if(response == 'coordinador'){
+                usuario = 'coordinador';
+                $("#modalExitoso").modal('show');
+            }
+            if(response == 'nuevo'){
+                usuario = 'nuevo';
                 $("#modalExitoso").modal('show');
             }
 		}
@@ -162,7 +181,12 @@ $(document).ready(function () {
     });
 
     $("#botonCerrar").click(function(){
-        window.location.href = base_url + "/ServicioSocial/";
+        if(usuario == 'coordinador'){
+            window.location.href = base_url + "/ServicioSocial/index.php/Alumnos";
+        }else{
+            window.location.href = base_url + "/ServicioSocial/";
+        }
+        
     });
 
     $("#telefono").keypress(function(e){
@@ -172,7 +196,7 @@ $(document).ready(function () {
         return /\d/.test(String.fromCharCode(keynum));
     });
 
-  
+    
     //----MENSAJE CUANDO COINCIDEN LAS MATRICULAS-----
 
     var matricula1 = $('[name=matricula]');

@@ -27,7 +27,7 @@
                                 <p class="card-text">Solo para estudiantes de la LIS</p>
                             </div>
                             <div class="col-4 bg-white border-white">
-                                <a href="<?php echo base_url()?>index.php/FormularioAlumno" class="btn btn-primary">REGISTRAR</a>
+                                <a href="<?php echo base_url()?>index.php/FormularioAlumno/nuevo" class="btn btn-primary">REGISTRAR</a>
                             </div>
                         </div>
                     </div>

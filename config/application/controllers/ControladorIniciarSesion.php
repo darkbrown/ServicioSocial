@@ -20,7 +20,7 @@ class ControladorIniciarSesion extends CI_Controller {
 		$confirmacion = "dsads";
 		if($this->input->post()){
 			$usuario = array(
-                'correo' => strtoupper ($this->input->post('correo')),
+                'correo' => mb_strtoupper ($this->input->post('correo')),
                 'contrasena' => $this->input->post('contrasena')
             );
 			$this->form_validation->set_rules('correo', 'Correo', 'trim|required|valid_email');

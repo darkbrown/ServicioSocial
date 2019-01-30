@@ -1,40 +1,47 @@
 $(document).ready(function () {
-
-
     var base_url = window.location.origin;
-    $('input#buscar').quicksearch('table tbody tr');
-
-    $(".editar").click(function(e){
-        e.preventDefault();
-        var matricula = $(this).parents("tr").find('td:eq(2)').text().trim();
-        matricula = encodeURIComponent(btoa(matricula));
-        window.open(base_url + "/ServicioSocial/index.php/EditarAlumno/" + matricula);     
+   
+    var table = $('#tablaAlumnos').DataTable({
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+        }
     });
 
-    $(".ver").click(function(e){
-        e.preventDefault();
-        var matricula = $(this).parents("tr").find('td:eq(2)').text().trim();
-        matricula = encodeURIComponent(btoa(matricula));
-        window.open(base_url + "/ServicioSocial/index.php/ConsultarAlumno/" + matricula);     
-    });
+   
 
-    $(".cambiarEstatus").click(function(e){
-        e.preventDefault();
-        var nombreAlumno = $(this).parents("tr").find('td:eq(1)').text().trim();
-        var matricula = $(this).parents("tr").find('td:eq(2)').text().trim();
-        var estatus = $('#cambiarEstatus').text();
+    $('.botonF1').hover(function(){
+        $('.btn').addClass('animacionVer');
+      })
+      $('.contenedor').mouseleave(function(){
+        $('.btn').removeClass('animacionVer');
+      })
 
-        if(estatus == 'SUSPENDER'){
-            $('#textoConfirmacion').html('¿Confirma que desea reactivar la cuenta del alumno?');
+    $('#tablaAlumnos tbody').on( 'click', '.editar', function () {
+        var datosFila = table.row( $(this).parents('tr') ).data();
+        matricula = encodeURIComponent(btoa(datosFila[1]));
+        window.open(base_url + "/ServicioSocial/index.php/EditarAlumno/" + matricula); 
+    } );
+
+    $('#tablaAlumnos tbody').on( 'click', '.ver', function () {
+        var datosFila = table.row( $(this).parents('tr') ).data();
+        matricula = encodeURIComponent(btoa(datosFila[1]));
+        window.open(base_url + "/ServicioSocial/index.php/ConsultarAlumno/" + matricula); 
+    } );
+
+    $('#tablaAlumnos tbody').on( 'click', '.cambiarEstatus', function () {
+        var datosFila = table.row( $(this).parents('tr') ).data();
+        
+        if ($(this).children('i').hasClass('fa-toggle-on')){
+            $('#textoConfirmacion').html('¿Confirma que desea suspender la cuenta del alumno? Sí el alumno cuenta con una sesión activa se cerrará');
         }else{
-            $('#textoConfirmacion').html('¿Confirma que desea suspender la cuenta del alumno? Si el alumno cuenta con una sesión activa se cerrará');
+            $('#textoConfirmacion').html('¿Confirma que desea reactivar la cuenta del alumno?');
         }
 
-
-        $('#nombreAlumno').html(nombreAlumno);
-        $('#matriculaAlumno').html(matricula);     
+        $('#nombreAlumno').html(datosFila[0]);
+        $('#matriculaAlumno').html(datosFila[1]);     
         $("#modalConfirmacion").modal("show");
-    });
+    } );
+
 
     $("#botonCancelar").click(function(){
         $("#modalConfirmacion").modal('hide');
@@ -44,7 +51,6 @@ $(document).ready(function () {
     $("#botonConfirmar").click(function(e){
 
         var matricula = $('#matriculaAlumno').text();
-
         $.ajax({
             type: "POST",
             url: base_url + "/ServicioSocial/index.php/ModificarEstatusAlumno/",
@@ -106,5 +112,53 @@ $(document).ready(function () {
         $(".errorAlGuardar").fadeOut(1500);
         location.reload(true);
     });
+
+
+    $(".registrarAlumno").click(function(){
+        location.href = base_url + "/ServicioSocial/index.php/FormularioAlumno/coordinador";
+    });
+
+
+    jQuery.fn.DataTable.ext.type.search.string = function ( data ) {
+        return ! data ?
+            '' :
+            typeof data === 'string' ?
+                data
+                    .replace( /έ/g, 'ε')
+                    .replace( /ύ/g, 'υ')
+                    .replace( /ό/g, 'ο')
+                    .replace( /ώ/g, 'ω')
+                    .replace( /ά/g, 'α')
+                    .replace( /ί/g, 'ι')
+                    .replace( /ή/g, 'η')
+                    .replace( /\n/g, ' ' )
+                    .replace( /[áÁ]/g, 'a' )
+                    .replace( /[éÉ]/g, 'e' )
+                    .replace( /[íÍ]/g, 'i' )
+                    .replace( /[óÓ]/g, 'o' )
+                    .replace( /[úÚ]/g, 'u' )
+                    .replace( /ê/g, 'e' )
+                    .replace( /î/g, 'i' )
+                    .replace( /ô/g, 'o' )
+                    .replace( /è/g, 'e' )
+                    .replace( /ï/g, 'i' )
+                    .replace( /ü/g, 'u' )
+                    .replace( /ã/g, 'a' )
+                    .replace( /õ/g, 'o' )
+                    .replace( /ç/g, 'c' )
+                    .replace( /ì/g, 'i' ) :
+                data;
+    };
+    
+     
+          // Buscar sin importar los acentos
+          jQuery('#datatable-table_filter input').keyup( function () {
+            table
+              .search(
+                jQuery.fn.DataTable.ext.type.search.string( this.value )
+              )
+              .draw();
+          } );
+     
 
 });

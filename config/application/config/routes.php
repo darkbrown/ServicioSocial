@@ -53,7 +53,7 @@ $route['default_controller'] = 'ControladorIniciarSesion';
 
 /** REGISTRO E INICIO DE SESIÓN*/
 
-$route['FormularioAlumno'] = 'ControladorSolicitarRegistro/formularioAlumno';
+$route['FormularioAlumno/(:any)'] = 'ControladorSolicitarRegistro/formularioAlumno/$1';
 $route['FormularioDependencia'] = 'ControladorSolicitarRegistro/formularioDependencia';
 $route['iniciarSesion'] = 'ControladorIniciarSesion/iniciarSesion';
 $route['RegistrarAlumno'] = '/ControladorSolicitarRegistro/registrarAlumno';
@@ -66,6 +66,7 @@ $route['Coordinador'] = 'ControladorCoordinador/index';
 $route['FormularioAlumnoCoordinador'] = 'ControladorCoordinador/formularioAlumno';
 $route['RegistrarAlumnoCoordinador'] = '/ControladorCoordinador/registrarAlumnoCoordinador';
 $route['Alumnos'] = 'ControladorCoordinador/listaAlumnos';
+$route['Responsables'] = 'ControladorCoordinador/listaResponsables';
 $route['EditarAlumno/(:any)'] = 'ControladorCoordinador/editarAlumno/$1';
 $route['ConsultarAlumno/(:any)'] = 'ControladorCoordinador/consultarAlumno/$1';
 $route['CambiarMatricula/(:any)'] = 'ControladorCoordinador/cambiarMatricula/$1';

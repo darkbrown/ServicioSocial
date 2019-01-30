@@ -7,10 +7,16 @@
     <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>vendor/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>vendor/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/Encabezados.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/bootstrap-table.css" />
+    
     <script type="text/javascript" src="<?php echo base_url();?>vendor/bootstrap/js/popper.js"></script>
     <script type="text/javascript" src="<?php echo base_url();?>vendor/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo base_url();?>vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="<?php echo base_url();?>js/bootstrap-table.min.js"></script>
+    <script type="text/javascript" src="<?php echo base_url();?>js/bootstrap-table-es-MX.min.js"></script>
+    <script type="text/javascript" src="<?php echo base_url();?>js/jquery.quicksearch.js"></script>
     <script type="text/javascript" src="<?php echo base_url();?>js/jquery.validate.js"></script>
+
 </head>
 
 <body>

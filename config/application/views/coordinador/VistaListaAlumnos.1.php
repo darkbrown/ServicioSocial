@@ -1,8 +1,14 @@
 <div class="container-fluid ">
 
     <h2 name="titulo" id="titulo">Lista de Alumnos</h2>
+
+    
     <div class="table-responsive">
-        <table class="table table-striped table-sm table-hover" id="tablaAlumnos" name="tablaAlumnos">
+    <a href="<?php echo base_url()?>index.php/FormularioAlumno/coordinador" class="registrarAlumno float-left btn btn-dark">REGISTRAR ALUMNO</a>
+        <table class=".table-responsive table table-striped table-sm table-hover" data-toggle="table" id="table" name="table"
+             data-pagination="true" data-page-list="[5, 10, 25, 50, 100, Unlimited]" data-page-size="5"
+                data-search="true" data-search-time-out="1" data-show-footer="true" formatShowingRows="false" 
+                data-show-toggle ="true">
             <thead class="encabezadoTabla">
                 <th data-sortable="true">NOMBRE</th>
                 <th data-sortable="true">MATRÍCULA</th>
@@ -51,13 +57,8 @@
                 <?php endforeach; ?>
             </tbody>
         </table>
-        
-        
     </div>
-   
 </div>
-
-<a href="#" class="registrarAlumno btn btn-dark fixed-bottom botonF1 ml-auto">+</a>
 
 <div class="modal" id="modalConfirmacion" tabindex="-1" role="dialog">
     <div class="modal-dialog " role="document">
@@ -105,7 +106,3 @@
 
 </html>
 <script type="text/javascript" src="<?php echo base_url();?>js/coordinador/ListaAlumnos.js"></script>
-<link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/jquery.dataTables.css" />
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/dataTables.bootstrap4.css" />
-    <script type="text/javascript" src="<?php echo base_url();?>js/datatables.min.js"></script>
-    <script type="text/javascript" src="<?php echo base_url();?>js/jquery.dataTables.min.js"></script>

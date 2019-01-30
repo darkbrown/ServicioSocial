@@ -7,6 +7,9 @@ body { background: #eee }
 table{
     margin-top: 15px;
 }
+.registrarAlumno{
+	margin-top: .70rem;
+}
 
 h2{
     text-align: center;
@@ -59,3 +62,66 @@ form label.error {
 .table-responsive{
 	overflow: auto;
 }
+
+/*Botones lista tabla*/
+
+.fa-pencil-square-o{
+	font-size: 1.2em;
+}
+.fa-pencil-square-o:hover{
+	color: rgb(72, 180, 180);
+}
+.fa-eye{
+	font-size: 1.2em;
+}
+.fa-eye:hover{
+	color: rgb(72, 180, 180);
+}
+.fa-toggle-on{
+	color: green;
+	font-size: 1.2em;
+}
+.fa-toggle-on:hover{
+	color: rgb(72, 180, 180);
+}
+.fa-toggle-off{
+	color: red;
+	font-size: 1.2em;
+}
+.fa-toggle-off:hover{
+	color: rgb(72, 180, 180);
+}
+
+/*TABLA*/
+
+.page-link{
+	color: black;
+}
+.page-item.active .page-link {
+    z-index: 2;
+    color: #fff;
+    background-color: #868e96;
+    border-color: #868e96;
+}
+
+
+/*boton flotante*/
+
+.botonF1{
+	width:60px;
+	height:60px;
+	border-radius:100%;
+	right:0;
+	bottom:0;
+	margin-right:16px;
+	margin-bottom:16px;
+	border:none;
+	outline:none;
+	color:#FFF;
+	font-size:36px;
+
+	transition:.3s;  
+	margin: 0;
+  }
+
+  

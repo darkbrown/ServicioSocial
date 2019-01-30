@@ -8,7 +8,7 @@
     <script type="text/javascript" src="<?php echo base_url();?>vendor/bootstrap/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>vendor/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>vendor/bootstrap/css/bootstrap.min.css">
-
+    <title id="tituloPagina" name="tituloPagina">SS: Nuevo</title>
 </head>
 
 <body background = '<?php echo base_url();?>images/beee.jpg'>

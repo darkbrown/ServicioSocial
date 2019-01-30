@@ -16,6 +16,8 @@ class ControladorCoordinador extends CI_Controller {
 		$this->load->view('coordinador/EncabezadoCoordinador');
 	}
 
+/***************** TODOS SOBRE ALUMNOS ******************/
+
 
 	public function listaAlumnos()
 	{
@@ -61,15 +63,15 @@ class ControladorCoordinador extends CI_Controller {
 		$this->load->model('ModeloUsuario'); 
         if($this->input->post()){
             $datosAlumno = array(
-                'nombre' => strtoupper($this->input->post('nombre')),
-				'apellidos' => strtoupper($this->input->post('apellidos')),
-				'matricula' => strtoupper($this->input->post('matricula')),				
+                'nombre' => mb_strtoupper($this->input->post('nombre')),
+				'apellidos' => mb_strtoupper($this->input->post('apellidos')),
+				'matricula' => mb_strtoupper($this->input->post('matricula')),				
                 'bloque' => $this->input->post('bloque'),
                 'seccion' => $this->input->post('seccion'),              
                 'telefono' => $this->input->post('telefono')
 			);
 			$datosUsuario = array(
-				'correo' => strtoupper($this->input->post('correo'))
+				'correo' => mb_strtoupper($this->input->post('correo'))
 			);
             $this->form_validation->set_rules('nombre', 'Nombre', 'trim|required');
 			$this->form_validation->set_rules('apellidos', 'Apellidos', 'trim|required');
@@ -133,9 +135,9 @@ class ControladorCoordinador extends CI_Controller {
         
         if($this->input->post()){
 			$this->load->model('ModeloAlumno'); 
-            $matriculaAnterior = strtoupper($this->input->post('matriculaAnterior'));
-			$matriculaNueva = strtoupper($this->input->post('matriculaNueva'));
-			$matriculaNueva2 = strtoupper($this->input->post('matriculaNueva2'));
+            $matriculaAnterior = mb_strtoupper($this->input->post('matriculaAnterior'));
+			$matriculaNueva = mb_strtoupper($this->input->post('matriculaNueva'));
+			$matriculaNueva2 = mb_strtoupper($this->input->post('matriculaNueva2'));
             $this->form_validation->set_rules('matriculaAnterior', 'MatriculaAnterior', 'trim|required|min_length[9]|max_length[9]');
 			$this->form_validation->set_rules('matriculaNueva', 'MatriculaNueva', 'trim|required|min_length[9]|max_length[9]');
 			$this->form_validation->set_rules('matriculaNueva2', 'MatriculaNueva2', 'trim|required|min_length[9]|max_length[9]|matches[matriculaNueva]');			
@@ -184,9 +186,9 @@ class ControladorCoordinador extends CI_Controller {
         if($this->input->post()){
 			$this->load->model('ModeloAlumno'); 
 			$this->load->model('ModeloUsuario'); 
-            $matricula = strtoupper($this->input->post('matricula'));
-			$contrasena1 = strtoupper($this->input->post('contrasena1'));
-			$contrasena2 = strtoupper($this->input->post('contrasena2'));
+            $matricula = mb_strtoupper($this->input->post('matricula'));
+			$contrasena1 = $this->input->post('contrasena1');
+			$contrasena2 = $this->input->post('contrasena2');
             $this->form_validation->set_rules('matricula', 'Matricula', 'trim|required|min_length[9]|max_length[9]');
 			$this->form_validation->set_rules('contrasena1', 'Contrasena1', 'trim|required|min_length[6]|max_length[15]');
             $this->form_validation->set_rules('contrasena2', 'Contrasena2', 'trim|required|matches[contrasena1]');
@@ -227,7 +229,7 @@ class ControladorCoordinador extends CI_Controller {
 		if($this->input->post()){
 			$this->load->model('ModeloAlumno'); 
 			$this->load->model('ModeloUsuario'); 
-            $matricula = strtoupper($this->input->post('matricula'));
+            $matricula = mb_strtoupper($this->input->post('matricula'));
             $this->form_validation->set_rules('matricula', 'Matricula', 'trim|required|min_length[9]|max_length[9]');
             if($this->form_validation->run() == TRUE){	
 				if($this->ModeloAlumno->verificarMatricula($matricula) == "1"){
@@ -301,18 +303,21 @@ class ControladorCoordinador extends CI_Controller {
         $confirmacion = "";
         
         if($this->input->post()){
+			
+
             $alumno = array(
-                'nombre' => strtoupper($this->input->post('nombre')),
-                'apellidos' => strtoupper($this->input->post('apellidos')),
-                'matricula' => strtoupper($this->input->post('matricula')),
+                'nombre' => mb_strtoupper($this->input->post('nombre')),
+                'apellidos' => mb_strtoupper($this->input->post('apellidos')),
+                'matricula' => mb_strtoupper($this->input->post('matricula')),
                 'bloque' => $this->input->post('bloque'),
                 'seccion' => $this->input->post('seccion'),               
                 'telefono' => $this->input->post('telefono')
             );
             $contrasena = $this->input->post('contrasena');
             $usuario = array(                
-                'correo' => strtoupper($this->input->post('correo'))
-            );
+                'correo' => mb_strtoupper($this->input->post('correo'))
+			);
+			
             $this->form_validation->set_rules('nombre', 'Nombre', 'trim|required');
             $this->form_validation->set_rules('apellidos', 'Apellidos', 'trim|required');
             $this->form_validation->set_rules('matricula', 'Matricula', 'trim|required|min_length[9]|max_length[9]');
@@ -353,4 +358,7 @@ class ControladorCoordinador extends CI_Controller {
         echo $confirmacion;
     }
 
+
+
+	/***************** TODO SOBRE RESPONSABLES ******************/
 }
