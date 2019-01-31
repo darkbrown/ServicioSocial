@@ -10,6 +10,7 @@ class ControladorAlumno extends CI_Controller {
 		
     }
 
+	//Utiliza Coordinador y Alumno
     public function formularioAlumno($usuario)
     {
         if($usuario == 'nuevo'){
@@ -20,8 +21,11 @@ class ControladorAlumno extends CI_Controller {
 		$this->load->view('registro/VistaRegistrarAlumno');
     }
 
+	//Utiliza Coordinador y Alumno
     public function registrarAlumno()
     {
+		$this->load->model('ModeloUsuario');  
+		$this->load->model('ModeloAlumno'); 
         $confirmacion = "";
         if($this->input->post()){
             $usuarioActual = $this->input->post('usuarioActual');
@@ -30,23 +34,23 @@ class ControladorAlumno extends CI_Controller {
             }elseif($usuarioActual == 'LIS | ServicioSocial'){
                 $confirmacion = 'nuevo';
             }else{
-                $confirmacion = "datosInvalidos";
+                $confirmacion = 'datosInvalidos';
             }
         
             $alumno = array(
-                'nombre' => mb_strtoupper($this->input->post('nombre')),
-                'apellidos' => mb_strtoupper($this->input->post('apellidos')),
-                'matricula' => mb_strtoupper($this->input->post('matricula')),
-                'bloque' => $this->input->post('bloque'),
-                'seccion' => $this->input->post('seccion'),               
-                'telefono' => $this->input->post('telefono')
+                'nombreAlumno' => mb_strtoupper($this->input->post('nombre')),
+                'apellidosAlumno' => mb_strtoupper($this->input->post('apellidos')),
+                'matriculaAlumno' => mb_strtoupper($this->input->post('matricula')),
+                'bloqueAlumno' => $this->input->post('bloque'),
+                'seccionAlumno' => $this->input->post('seccion'),               
+                'telefonoAlumno' => $this->input->post('telefono')
             );
             $contrasena = $this->input->post('contrasena');
             $usuario = array(                
-                'correo' => mb_strtoupper($this->input->post('correo')),
-                'tipo' => 'ALUMNO',
-                'contrasena' => hash("sha256", $contrasena),
-                'estatus' => 'ACTIVO'
+                'correoUsuario' => mb_strtoupper($this->input->post('correo')),
+                'tipoUsuario' => 'ALUMNO',
+                'contrasenaUsuario' => hash("sha256", $contrasena),
+                'estatusUsuario' => 'ACTIVO'
             );
             $this->form_validation->set_rules('nombre', 'Nombre', 'trim|required|max_length[60]');
             $this->form_validation->set_rules('apellidos', 'Apellidos', 'trim|required|max_length[60]');
@@ -58,16 +62,13 @@ class ControladorAlumno extends CI_Controller {
             $this->form_validation->set_rules('telefono', 'Telefono', 'trim|required|numeric|max_length[30]');
             $this->form_validation->set_rules('contrasena', 'Contrasena', 'trim|required|min_length[6]|max_length[15]');
             $this->form_validation->set_rules('contrasena2', 'Contrasena2', 'trim|required|matches[contrasena]');
-
             if($this->form_validation->run() == TRUE && $confirmacion != 'datosInvalidos'){
-                $this->form_validation->set_rules('matricula', 'Matricula', 'trim|required|min_length[9]|max_length[9]|is_unique[alumno.matricula]');
-                $this->form_validation->set_rules('correo', 'Correo', 'trim|required|valid_email|is_unique[usuario.correo]');
-                if($this->form_validation->run() == TRUE){
-                    $this->load->model('ModeloUsuario');                   
+                $this->form_validation->set_rules('matricula', 'Matricula', 'trim|required|min_length[9]|max_length[9]|is_unique[alumno.matriculaAlumno]');
+                $this->form_validation->set_rules('correo', 'Correo', 'trim|required|valid_email|is_unique[usuario.correoUsuario]');
+                if($this->form_validation->run() == TRUE){                              
                     $resultado = $this->ModeloUsuario->registrarUsuario($usuario);
                     if($resultado['respuesta'] == '1'){
-                        $alumno['Usuario_idUsuario'] = $resultado['idUsuario'];
-                        $this->load->model('ModeloAlumno');                        
+                        $alumno['Usuario_idUsuario'] = $resultado['idUsuario'];                                           
                         $this->ModeloAlumno->registrarAlumno($alumno);                           
                     }else{
                         $confirmacion = "error";
@@ -79,13 +80,13 @@ class ControladorAlumno extends CI_Controller {
                 $confirmacion = "datosInvalidos";
             }
         }else{
-            $confirmacion =  "vacio";
+            $confirmacion = "vacio";
         }
 
         echo $confirmacion;
     }
 
-
+	//Utiliza Coordinador
     public function listaAlumnos()
 	{
 		$this->load->model('ModeloAlumno');
@@ -94,6 +95,7 @@ class ControladorAlumno extends CI_Controller {
 		$this->load->view('coordinador/VistaListaAlumnos', $alumnos);
 	}
 
+	//Utiliza Coordinador
 	public function editarAlumno($matricula)
 	{
 		$matricula = base64_decode(urldecode($matricula));
@@ -102,15 +104,15 @@ class ControladorAlumno extends CI_Controller {
 			$this->load->model('ModeloAlumno');
 			$alumno =  $this->ModeloAlumno->obtenerAlumno($matricula);
 			
-			if(count($alumno)){
+			if($alumno){
 				$datos = array(
-					'nombre' => $alumno[0]['nombre'],
-					'apellidos' => $alumno[0]['apellidos'],
-					'matricula' => $alumno[0]['matricula'],
-					'bloque' => $alumno[0]['bloque'],
-					'seccion' => $alumno[0]['seccion'],
-					'correo' => $alumno[0]['correo'],
-					'telefono' => $alumno[0]['telefono'],
+					'nombre' => $alumno['nombreAlumno'],
+					'apellidos' => $alumno['apellidosAlumno'],
+					'matricula' => $alumno['matriculaAlumno'],
+					'bloque' => $alumno['bloqueAlumno'],
+					'seccion' => $alumno['seccionAlumno'],
+					'correo' => $alumno['correoUsuario'],
+					'telefono' => $alumno['telefonoAlumno'],
 				);
 
 				$this->load->view('coordinador/EncabezadoCoordinador');
@@ -123,6 +125,7 @@ class ControladorAlumno extends CI_Controller {
 		}	
 	}
 
+	//Utiliza Coordinador
 	public function modificarAlumno()
 	{
 		$confirmacion = "";
@@ -130,15 +133,15 @@ class ControladorAlumno extends CI_Controller {
 		$this->load->model('ModeloUsuario'); 
         if($this->input->post()){
             $datosAlumno = array(
-                'nombre' => mb_strtoupper($this->input->post('nombre')),
-				'apellidos' => mb_strtoupper($this->input->post('apellidos')),
-				'matricula' => mb_strtoupper($this->input->post('matricula')),				
-                'bloque' => $this->input->post('bloque'),
-                'seccion' => $this->input->post('seccion'),              
-                'telefono' => $this->input->post('telefono')
+                'nombreAlumno' => mb_strtoupper($this->input->post('nombre')),
+				'apellidosAlumno' => mb_strtoupper($this->input->post('apellidos')),
+				'matriculaAlumno' => mb_strtoupper($this->input->post('matricula')),				
+                'bloqueAlumno' => $this->input->post('bloque'),
+                'seccionAlumno' => $this->input->post('seccion'),              
+                'telefonoAlumno' => $this->input->post('telefono')
 			);
 			$datosUsuario = array(
-				'correo' => mb_strtoupper($this->input->post('correo'))
+				'correoUsuario' => mb_strtoupper($this->input->post('correo'))
 			);
             $this->form_validation->set_rules('nombre', 'Nombre', 'trim|required');
 			$this->form_validation->set_rules('apellidos', 'Apellidos', 'trim|required');
@@ -149,9 +152,9 @@ class ControladorAlumno extends CI_Controller {
             $this->form_validation->set_rules('telefono', 'Telefono', 'trim|required|numeric');
 
             if($this->form_validation->run() == TRUE){
-				if($this->ModeloAlumno->verificarMatricula($datosAlumno['matricula']) == '1'){
-					$idUsuario = $this->ModeloAlumno->obtenerIdUsuario($datosAlumno['matricula']);
-					if($this->ModeloUsuario->comprobarMismoCorreo($datosUsuario['correo'], $idUsuario) == '1'){
+				if($this->ModeloAlumno->verificarMatricula($datosAlumno['matriculaAlumno']) == '1'){
+					$idUsuario = $this->ModeloAlumno->obtenerIdUsuario($datosAlumno['matriculaAlumno']);
+					if($this->ModeloUsuario->comprobarMismoCorreo($datosUsuario['correoUsuario'], $idUsuario) == '1'){
 						$modificacionAlumno = $this->ModeloAlumno->modificarAlumno($datosAlumno);
 						if($modificacionAlumno == true){
 							$confirmacion = true;
@@ -159,7 +162,7 @@ class ControladorAlumno extends CI_Controller {
 							$confirmacion = false;
 						}
 					}else{
-						if($this->ModeloUsuario->verificarCorreo($datosUsuario['correo']) == '0'){
+						if($this->ModeloUsuario->verificarCorreo($datosUsuario['correoUsuario']) == '0'){
 							$this->ModeloAlumno->modificarAlumno($datosAlumno);
 							$modificacionUsuario = $this->ModeloUsuario->modificarUsuario($datosUsuario, $idUsuario);
 								if($modificacionUsuario == true){
@@ -183,19 +186,26 @@ class ControladorAlumno extends CI_Controller {
         echo $confirmacion;
 	}
 
+	//Utiliza Coordinador
 	public function cambiarMatricula($matricula)
 	{
 		$matricula = base64_decode(urldecode($matricula));
-		
-		if(strlen($matricula) == 9){
-			$datos['matricula'] = $matricula;
-			$this->load->view('coordinador/EncabezadoCoordinador');
-			$this->load->view('coordinador/VistaModificarMatricula', $datos);			
+		$this->load->model('ModeloAlumno');
+		if(strlen($matricula) == 9){		
+			$alumno =  $this->ModeloAlumno->obtenerAlumno($matricula);
+			if($alumno){
+				$datos['matricula'] = mb_strtoupper($matricula);
+				$this->load->view('coordinador/EncabezadoCoordinador');
+				$this->load->view('coordinador/VistaModificarMatricula', $datos);
+			}else{
+				echo "RECURSO NO DISPONIBLE PARA EDICIÓN";
+			}			
 		}else{
 			echo "LOS DATOS NO SE RECIBIERON CORRECTAMENTE O LA MATRÍCULA ES INVÁLIDA";
 		}	
 	}
 
+	//Utiliza Coordinador
 	public function modificarMatricula()
 	{		
 		$confirmacion = "";
@@ -211,10 +221,10 @@ class ControladorAlumno extends CI_Controller {
             if($this->form_validation->run() == TRUE){	
 				if($matriculaAnterior != $matriculaNueva){											
 					if($this->ModeloAlumno->verificarMatricula($matriculaNueva) == "0"){ 
-						$datos = array(
-							'matricula' => $matriculaNueva
+						$nueva = array(
+							'matriculaAlumno' => $matriculaNueva
 						);     
-						$confirmacion = $this->ModeloAlumno->modificarMatricula($matriculaAnterior, $datos);
+						$confirmacion = $this->ModeloAlumno->modificarMatricula($matriculaAnterior, $nueva);
 					}else{
 						$confirmacion = "yaExiste";
 					}
@@ -231,6 +241,7 @@ class ControladorAlumno extends CI_Controller {
         echo $confirmacion;
 	}
 
+	//Utiliza Coordinador
 	public function cambiarContrasenaAlumno($matricula)
 	{
 		$matricula = base64_decode(urldecode($matricula));
@@ -245,7 +256,7 @@ class ControladorAlumno extends CI_Controller {
 		
 	}
 
-
+	//Utiliza Coordinador
 	public function modificarContrasenaAlumno()
 	{		
 		$confirmacion = "";
@@ -263,11 +274,11 @@ class ControladorAlumno extends CI_Controller {
 				if($this->ModeloAlumno->verificarMatricula($matricula) == "1"){
 					$idUsuario = $this->ModeloAlumno->obtenerIdUsuario($matricula);
 					$usuario = $this->ModeloUsuario->obtenerContrasena($idUsuario);
-					if(count($usuario) > 0){
+					if($usuario){
 						$contrasenaNueva = hash("sha256", $contrasena1);
-						if($usuario[0]['contrasena'] != $contrasenaNueva){
+						if($usuario['contrasenaUsuario'] != $contrasenaNueva){
 							$datosUsuario = array(
-								'contrasena' => $contrasenaNueva
+								'contrasenaUsuario' => $contrasenaNueva
 							);
 							$confirmacion = $this->ModeloUsuario->modificarUsuario($datosUsuario, $idUsuario);
 						}else{
@@ -289,7 +300,7 @@ class ControladorAlumno extends CI_Controller {
         echo $confirmacion;
 	}
 
-
+	//Utiliza Coordinador
 	public function modificarEstatusAlumno()
 	{
 		$confirmacion = "";
@@ -302,15 +313,15 @@ class ControladorAlumno extends CI_Controller {
 				if($this->ModeloAlumno->verificarMatricula($matricula) == "1"){
 					$idUsuario = $this->ModeloAlumno->obtenerIdUsuario($matricula);
 					$usuario = $this->ModeloUsuario->obtenerEstatus($idUsuario);
-					if(count($usuario) > 0){
-						if($usuario[0]['estatus'] == 'ACTIVO'){
+					if($usuario){
+						if($usuario['estatusUsuario'] == 'ACTIVO'){
 							$datosUsuario = array(
-								'estatus' => 'SUSPENDIDO'
+								'estatusUsuario' => 'SUSPENDIDO'
 							);
 							$confirmacion = $this->ModeloUsuario->modificarUsuario($datosUsuario, $idUsuario);
-						}elseif($usuario[0]['estatus'] == 'SUSPENDIDO'){
+						}elseif($usuario['estatusUsuario'] == 'SUSPENDIDO'){
 							$datosUsuario = array(
-								'estatus' => 'ACTIVO'
+								'estatusUsuario' => 'ACTIVO'
 							);
 							$confirmacion = $this->ModeloUsuario->modificarUsuario($datosUsuario, $idUsuario);
 						}
@@ -326,27 +337,26 @@ class ControladorAlumno extends CI_Controller {
         }else{
             $confirmacion = "vacio";
         }
-
         echo $confirmacion;
 	}
 
+	//Utiliza Coordinador
 	public function consultarAlumno($matricula)
 	{
 		$matricula = base64_decode(urldecode($matricula));
 		
 		if(strlen($matricula) <= 9 && strlen($matricula) > 0){
 			$this->load->model('ModeloAlumno');
-			$alumno =  $this->ModeloAlumno->obtenerAlumno($matricula);
-			
-			if(count($alumno)){
+			$alumno =  $this->ModeloAlumno->obtenerAlumno($matricula);		
+			if($alumno){
 				$datos = array(
-					'nombre' => $alumno[0]['nombre'],
-					'apellidos' => $alumno[0]['apellidos'],
-					'matricula' => $alumno[0]['matricula'],
-					'bloque' => $alumno[0]['bloque'],
-					'seccion' => $alumno[0]['seccion'],
-					'correo' => $alumno[0]['correo'],
-					'telefono' => $alumno[0]['telefono'],
+					'nombre' => $alumno['nombreAlumno'],
+					'apellidos' => $alumno['apellidosAlumno'],
+					'matricula' => $alumno['matriculaAlumno'],
+					'bloque' => $alumno['bloqueAlumno'],
+					'seccion' => $alumno['seccionAlumno'],
+					'correo' => $alumno['correoUsuario'],
+					'telefono' => $alumno['telefonoAlumno']
 				);
 
 				$this->load->view('coordinador/EncabezadoCoordinador');
@@ -362,6 +372,4 @@ class ControladorAlumno extends CI_Controller {
 
 
 }
-
-
-?>    
+?>

@@ -58,10 +58,10 @@ $route['iniciarSesion'] = 'ControladorIniciarSesion/iniciarSesion';
 $route['tipoCuenta'] = '/ControladorIniciarSesion/seleccionarNuevaCuenta';
 
 $route['FormularioAlumno/(:any)'] = 'ControladorAlumno/formularioAlumno/$1';//+Coordinador
-$route['FormularioDependencia'] = 'ControladorResponsable/formularioDependencia';
+$route['FormularioResponsable/(:any)'] = 'ControladorResponsable/formularioResponsable/$1'; //+Coordinador
 
 $route['RegistrarAlumno'] = '/ControladorAlumno/registrarAlumno'; //+Coordinador
-$route['RegistrarDependencia'] = '/ControladorResponsable/registrarDependencia';
+$route['RegistrarResponsable'] = '/ControladorResponsable/registrarResponsable';//+Coordinador
 
 
 
@@ -69,8 +69,9 @@ $route['RegistrarDependencia'] = '/ControladorResponsable/registrarDependencia';
 $route['Coordinador'] = 'ControladorCoordinador/index';
 $route['FormularioAlumnoCoordinador'] = 'ControladorAlumno/formularioAlumno';
 $route['Alumnos'] = 'ControladorAlumno/listaAlumnos';
-$route['Responsables'] = 'ControladorCoordinador/listaResponsables';
+$route['Responsables'] = 'ControladorResponsable/listaResponsables';
 $route['EditarAlumno/(:any)'] = 'ControladorAlumno/editarAlumno/$1';
+$route['EditarResponsable/(:any)'] = 'ControladorResponsable/editarResponsable/$1';
 $route['ConsultarAlumno/(:any)'] = 'ControladorAlumno/consultarAlumno/$1';
 $route['CambiarMatricula/(:any)'] = 'ControladorAlumno/cambiarMatricula/$1';
 $route['ModificarMatricula'] = 'ControladorAlumno/modificarMatricula';

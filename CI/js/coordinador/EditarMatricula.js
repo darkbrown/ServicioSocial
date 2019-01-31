@@ -123,7 +123,7 @@ $(document).ready(function () {
     $("#botonCerrar").click(function(){
         $(".errorAlGuardar").fadeOut(1500);
             $('<div class="alert alert-success guardadoExitoso" role="alert">Modificación Exitosa!!!</div>').insertAfter($("#matriculaAnterior"));
-            matricula0.val(matricula1.val().trim());
+            matricula0.val(matricula1.val().toUpperCase().trim());
             matricula1.val("");
             matricula2.val("");            
             $('body,html').animate({scrollTop : 0}, 500);

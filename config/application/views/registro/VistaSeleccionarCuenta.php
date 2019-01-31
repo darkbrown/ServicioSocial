@@ -45,7 +45,7 @@
                                     enviar tus proyectos?</p>
                             </div>
                             <div class="col-4 bg-white border-white">
-                                <a href="<?php echo base_url()?>index.php/FormularioDependencia" class="btn btn-primary">REGISTRAR</a>
+                                <a href="<?php echo base_url()?>index.php/FormularioResponsable/nuevo" class="btn btn-primary">REGISTRAR</a>
                             </div>
                         </div>
                     </div>

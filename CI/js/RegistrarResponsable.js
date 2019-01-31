@@ -1,6 +1,6 @@
 $(document).ready(function () {
     var base_url = window.location.origin;
-
+    var usuario = "";
     $("#telefonoDependencia, #extDependencia, #cpDependencia, #numExterior, #numInterior, #usuariosDirectos, #usuariosIndirectos, #telefonoResponsable, #extResponsable").keypress(function(e){
         var keynum = window.event ? window.event.keyCode : e.which;
         if ((keynum == 8) || (keynum == 46))
@@ -278,10 +278,11 @@ $(document).ready(function () {
         var correoResponsable1 = $("#correoResponsable1").val().trim();    
         var correoResponsable2 = $("#correoResponsable2").val().trim();    
         var contrasenaResponsable1 = $("#contrasenaResponsable1").val().trim();    
-        var contrasenaResponsable2 = $("#contrasenaResponsable2").val().trim();       
+        var contrasenaResponsable2 = $("#contrasenaResponsable2").val().trim();     
+        var usuarioActual = document.title;  
 		$.ajax({
 			type: "POST",
-			url: base_url + "/ServicioSocial/index.php/RegistrarDependencia",
+			url: base_url + "/ServicioSocial/index.php/RegistrarResponsable",
 			data: {
                 'nombreDependencia': nombreDependencia,
                 'sectorDependencia': sectorDependencia,
@@ -304,8 +305,8 @@ $(document).ready(function () {
                 'correoResponsable1': correoResponsable1,
                 'correoResponsable2': correoResponsable2,
                 'contrasenaResponsable1': contrasenaResponsable1,
-                'contrasenaResponsable2': contrasenaResponsable2
-
+                'contrasenaResponsable2': contrasenaResponsable2,
+                'usuarioActual': usuarioActual
 		    },
 		success: function(response){   
             alert(response); 
@@ -338,16 +339,26 @@ $(document).ready(function () {
                     $(".error").fadeOut(1500);
                 },10000);
             }
-            
-            if(response == '1'){
+
+            if(response == 'coordinador'){
+                usuario = 'coordinador';
                 $("#modalExitoso").modal('show');
             }
+            if(response == 'nuevo'){
+                usuario = 'nuevo';
+                $("#modalExitoso").modal('show');
+            }
+            
 		}
 		});
     });
 
     $("#botonCerrar").click(function(){
-        window.location.href = base_url + "/ServicioSocial/";
+        if(usuario == 'coordinador'){
+            window.location.href = base_url + "/ServicioSocial/index.php/Responsables";
+        }else{
+            window.location.href = base_url + "/ServicioSocial/";
+        }
     });
 
         

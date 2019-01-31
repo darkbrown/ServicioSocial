@@ -1,27 +1,35 @@
 $(document).ready(function () {
     var base_url = window.location.origin;
    
-    var table = $('#tablaAlumnos').DataTable({
+    var table = $('#tablaResponsables').DataTable({
         "language": {
             "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
         },
-        "aaSorting": [],
+        "aaSorting": []
     });
 
-   
-    $('#tablaAlumnos tbody').on( 'click', '.editar', function () {
+    $(".registrarResponsable").click(function(){
+        location.href = base_url + "/ServicioSocial/index.php/FormularioResponsable/coordinador";
+    });
+
+    $('#tablaResponsables tbody').on( 'click', '.editar', function () {
         var datosFila = table.row( $(this).parents('tr') ).data();
-        matricula = encodeURIComponent(btoa(datosFila[1]));
-        window.open(base_url + "/ServicioSocial/index.php/EditarAlumno/" + matricula); 
+        correo = encodeURIComponent(btoa(datosFila[2]));
+        window.open(base_url + "/ServicioSocial/index.php/EditarResponsable/" + correo); 
     } );
 
-    $('#tablaAlumnos tbody').on( 'click', '.ver', function () {
+
+
+/**Por revisar */
+    
+
+    $('#tablaResponsables tbody').on( 'click', '.ver', function () {
         var datosFila = table.row( $(this).parents('tr') ).data();
         matricula = encodeURIComponent(btoa(datosFila[1]));
         window.open(base_url + "/ServicioSocial/index.php/ConsultarAlumno/" + matricula); 
     } );
 
-    $('#tablaAlumnos tbody').on( 'click', '.cambiarEstatus', function () {
+    $('#tablaResponsables tbody').on( 'click', '.cambiarEstatus', function () {
         var datosFila = table.row( $(this).parents('tr') ).data();
         
         if ($(this).children('i').hasClass('fa-toggle-on')){
@@ -107,9 +115,7 @@ $(document).ready(function () {
     });
 
 
-    $(".registrarAlumno").click(function(){
-        location.href = base_url + "/ServicioSocial/index.php/FormularioAlumno/coordinador";
-    });
+    
 
 
     jQuery.fn.DataTable.ext.type.search.string = function ( data ) {

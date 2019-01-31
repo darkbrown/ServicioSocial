@@ -10,7 +10,7 @@ class ModeloCoordinador extends CI_Model {
     public function obtenerCoordinadorXUsuario($idUsuario)
     {
         $this->db->where('Usuario_idUsuario', $idUsuario);
-        return $this->db->get('coordinador')->result_array();
+        return $this->db->get('coordinador')->row_array();
     }
 
 }

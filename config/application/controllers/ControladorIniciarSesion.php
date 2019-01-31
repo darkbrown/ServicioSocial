@@ -37,37 +37,37 @@ class ControladorIniciarSesion extends CI_Controller {
 				$usuario['contrasena'] = hash("sha256", $usuario['contrasena']);
 				$nuevoUsuario = Array();
 				$nuevoUsuario = $this->ModeloUsuario->obtenerUsuario($usuario);
-				if(count($nuevoUsuario) > 0){
-					if($nuevoUsuario[0]['estatus'] != 'SUSPENDIDO'){
+				if($nuevoUsuario){
+					if($nuevoUsuario['estatusUsuario'] != 'SUSPENDIDO'){
 						$datosSesion = Array();
-						if($nuevoUsuario[0]['tipo'] == 'ALUMNO'){
+						if($nuevoUsuario['tipoUsuario'] == 'ALUMNO'){
 							$this->load->model('ModeloAlumno');
-							$alumno = $this->ModeloAlumno->obtenerAlumnoXUsuario($nuevoUsuario[0]['idUsuario']);
-							if(count($alumno) > 0){
+							$alumno = $this->ModeloAlumno->obtenerAlumnoXUsuario($nuevoUsuario['idUsuario']);
+							if($alumno){
 								$datosSesion = array(
-									'correo' => $nuevoUsuario[0]['correo'],
-									'nombre' => $alumno[0]['nombre'],
-									'tipoUsuario' => $nuevoUsuario[0]['tipo'],
-									'matricula' => $alumno[0]['matricula'],
-									'apellidos' => $alumno[0]['apellidos'],
-									'idUsuario' => $nuevoUsuario[0]['idUsuario']
+									'correo' => $nuevoUsuario['correoUsuario'],
+									'nombre' => $alumno['nombreAlumno'],
+									'tipoUsuario' => $nuevoUsuario['tipoUsuario'],
+									'matricula' => $alumno['matriculaAlumno'],
+									'apellidos' => $alumno['apellidosAlumno'],
+									'idUsuario' => $nuevoUsuario['idUsuario']
 								);
-								$directorio = realpath(APPPATH) . '/archivos/' . base64_encode('ALUMNOS') . '/'.base64_encode($nuevoUsuario[0]['idUsuario']);
+								$directorio = realpath(APPPATH) . '/archivos/' . base64_encode('ALUMNOS') . '/'.base64_encode($nuevoUsuario['idUsuario']);
 							}else{
 								$confirmacion = 'noExiste';
 							}
-						}elseif($nuevoUsuario[0]['tipo'] == 'COORDINADOR'){
+						}elseif($nuevoUsuario['tipoUsuario'] == 'COORDINADOR'){
 							$this->load->model('ModeloCoordinador');
-							$coordinador = $this->ModeloCoordinador->obtenerCoordinadorXUsuario($nuevoUsuario[0]['idUsuario']);
-							if(count($coordinador) > 0){
+							$coordinador = $this->ModeloCoordinador->obtenerCoordinadorXUsuario($nuevoUsuario['idUsuario']);
+							if($coordinador){
 								$datosSesion = array(
-									'correo' => $nuevoUsuario[0]['correo'],
-									'nombre' => $coordinador[0]['nombre'],
-									'tipoUsuario' => $nuevoUsuario[0]['tipo'],
-									'apellidos' => $coordinador[0]['apellidos'],
-									'idUsuario' => $nuevoUsuario[0]['idUsuario']
+									'correo' => $nuevoUsuario['correoUsuario'],
+									'nombre' => $coordinador['nombreCoordinador'],
+									'tipoUsuario' => $nuevoUsuario['tipoUsuario'],
+									'apellidos' => $coordinador['apellidosCoordinador'],
+									'idUsuario' => $nuevoUsuario['idUsuario']
 								);
-								$directorio = realpath(APPPATH) . '/archivos/' . base64_encode('COORDINADORES') . '/'.base64_encode($nuevoUsuario[0]['idUsuario']);
+								$directorio = realpath(APPPATH) . '/archivos/' . base64_encode('COORDINADORES') . '/'.base64_encode($nuevoUsuario['idUsuario']);
 							}else{
 								$confirmacion = 'noExiste';
 							}					

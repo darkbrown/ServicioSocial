@@ -11,53 +11,67 @@ class ControladorResponsable extends CI_Controller {
 
 	public function index()
 	{
-		
+		//AQUI VA SU VENTANA DE INICIO
 	}
 
-	public function formularioDependencia()
+	public function formularioResponsable($usuario)
     {
-        $this->load->view('EncabezadoVacio');
-		$this->load->view('registro/VistaRegistrarDependencia');
+        if($usuario == 'nuevo'){
+            $this->load->view('EncabezadoVacio');
+        }elseif($usuario =='coordinador'){
+            $this->load->view('coordinador/EncabezadoCoordinador');
+        }  
+		$this->load->view('registro/VistaRegistrarResponsable');
     }
 
-    public function registrarDependencia()
+    //Se registra la dependencia y el responsable
+    public function registrarResponsable()
     {
         $confirmacion = "";
         
         if($this->input->post()){
+            $usuarioActual = $this->input->post('usuarioActual');
+            if($usuarioActual == 'SS: Coordinador'){
+                $confirmacion = 'coordinador';
+            }elseif($usuarioActual == 'LIS | ServicioSocial'){
+                $confirmacion = 'nuevo';
+            }else{
+                $confirmacion = "datosInvalidos";
+            }
+
             $this->load->model('ModeloUsuario');
             $this->load->model('ModeloResponsable'); 
             $this->load->model('ModeloDependencia');        
 
             $dependencia = array(
-                'nombre' => strtoupper($this->input->post('nombreDependencia')),
-                'sector' => strtoupper($this->input->post('sectorDependencia')),
-                'telefono' => $this->input->post('telefonoDependencia'),
-                'extension' => $this->input->post('extDependencia'),
-                'correo' => strtoupper($this->input->post('correoDependencia')),
-                'estadoRepublica' => strtoupper($this->input->post('estadoRepublica')),
-                'codigoPostal' => $this->input->post('cpDependencia'),
-                'ciudad' => strtoupper($this->input->post('ciudadDependencia')),
-                'direccion' => strtoupper($this->input->post('direccionDependencia')),
-                'numExterior' => $this->input->post('numExterior'),
-                'numInterior' => $this->input->post('numInterior'),
-                'usuariosDirectos' => $this->input->post('usuariosDirectos'),
-                'usuariosIndirectos' => $this->input->post('usuariosIndirectos')
+                'nombreDependencia' => mb_strtoupper($this->input->post('nombreDependencia')),
+                'sectorDependencia' => mb_strtoupper($this->input->post('sectorDependencia')),
+                'telefonoDependencia' => $this->input->post('telefonoDependencia'),
+                'extensionDependencia' => $this->input->post('extDependencia'),
+                'correoDependencia' => mb_strtoupper($this->input->post('correoDependencia')),
+                'estadoRepublicaDependencia' => mb_strtoupper($this->input->post('estadoRepublica')),
+                'codigoPostalDependencia' => $this->input->post('cpDependencia'),
+                'ciudadDependencia' => mb_strtoupper($this->input->post('ciudadDependencia')),
+                'direccionDependencia' => mb_strtoupper($this->input->post('direccionDependencia')),
+                'numExteriorDependencia' => $this->input->post('numExterior'),
+                'numInteriorDependencia' => $this->input->post('numInterior'),
+                'usuariosDirectosDependencia' => $this->input->post('usuariosDirectos'),
+                'usuariosIndirectosDependencia' => $this->input->post('usuariosIndirectos')
             );
 
             $responsable = array(
-                'nombre' => strtoupper($this->input->post('nombreResponsable')),
-                'apellidos' => strtoupper($this->input->post('apellidosResponsable')),
-                'cargo' => strtoupper($this->input->post('cargoResponsable')),
-                'telefono' => $this->input->post('telefonoResponsable'),
-                'extension' => $this->input->post('extResponsable')
+                'nombreResponsable' => mb_strtoupper($this->input->post('nombreResponsable')),
+                'apellidosResponsable' => mb_strtoupper($this->input->post('apellidosResponsable')),
+                'cargoResponsable' => mb_strtoupper($this->input->post('cargoResponsable')),
+                'telefonoResponsable' => $this->input->post('telefonoResponsable'),
+                'extensionResponsable' => $this->input->post('extResponsable')
             );
             $contrasena = $this->input->post('contrasenaResponsable1');
             $usuario = array(                
-                'correo' => strtoupper($this->input->post('correoResponsable1')),
-                'contrasena' => hash("sha256", $contrasena),
-                'tipo' => 'RESPONSABLE',
-                'estatus' => 'ACTIVO'
+                'correoUsuario' => mb_strtoupper($this->input->post('correoResponsable1')),
+                'contrasenaUsuario' => hash("sha256", $contrasena),
+                'tipoUsuario' => 'RESPONSABLE',
+                'estatusUsuario' => 'ACTIVO'
             );
             $this->form_validation->set_rules('nombreDependencia', 'NombreDependencia', 'trim|required|max_length[350]');
             $this->form_validation->set_rules('sectorDependencia', 'SectorDependencia', 'trim|required|max_length[20]');
@@ -84,13 +98,13 @@ class ControladorResponsable extends CI_Controller {
 
             if($this->form_validation->run() == TRUE){
             
-                if($this->ModeloUsuario->verificarCorreo($usuario['correo']) == '0'){                         
+                if($this->ModeloUsuario->verificarCorreo($usuario['correoUsuario']) == '0'){                         
                     $resultado = $this->ModeloUsuario->registrarUsuario($usuario);
                     if($resultado['respuesta'] == '1'){
                         $responsable['Usuario_idUsuario'] = $resultado['idUsuario'];
                         $dependencia['Responsable_idUsuario'] = $resultado['idUsuario'];
                         $this->ModeloResponsable->registrarResponsable($responsable);                   
-                        $confirmacion = $this->ModeloDependencia->registrarDependencia($dependencia);                           
+                        $this->ModeloDependencia->registrarDependencia($dependencia);                           
                     }else{
                         $confirmacion = "error";
                     }
@@ -105,6 +119,68 @@ class ControladorResponsable extends CI_Controller {
         }
 
         echo $confirmacion;
+    }
+
+    //Utiliza Coordinador
+    public function listaResponsables()
+	{
+		$this->load->model('ModeloResponsable');
+		$responsables['listaResponsables'] = $this->ModeloResponsable->obtenerResponsables();
+		$this->load->view('coordinador/EncabezadoCoordinador');
+		$this->load->view('coordinador/VistaListaResponsables', $responsables);
+    }
+    
+    //Utiliza Coordinador
+    public function editarResponsable($correo)
+    {
+        $correo = base64_decode(urldecode($correo));
+		
+		if(filter_var($correo, FILTER_VALIDATE_EMAIL)){
+			$this->load->model('ModeloResponsable');
+			$responsable =  $this->ModeloResponsable->obtenerResponsable($correo);
+		    print_r($responsable) ;
+			if($responsable){
+                /*
+                $datos = array(
+                    'nombreDependencia' => $responsable['nombreDependencia'],
+                    'sector' => $responsable['sector'],
+                    'telefono' => $responsable['telefono'],
+                    'extension' => $responsable['extension'],
+                    'correo' => $responsable['nombreDependencia'],
+                    'estadoRepublica' => $responsable['nombreDependencia'],
+                    'codigoPostal' => $responsable['nombreDependencia'],
+                    'ciudad' => $responsable['nombreDependencia'],
+                    'direccion' => $responsable['nombreDependencia'],
+                    'numExterior' => $responsable['nombreDependencia'],
+                    'numInterior' => $responsable['nombreDependencia'],
+                    'usuariosDirectos' => $responsable['nombreDependencia'],
+                    'usuariosIndirectos' => $responsable['nombreDependencia'],
+                );
+    
+                $responsable = array(
+                    'nombre' => strtoupper($this->input->post('nombreResponsable')),
+                    'apellidos' => strtoupper($this->input->post('apellidosResponsable')),
+                    'cargo' => strtoupper($this->input->post('cargoResponsable')),
+                    'telefono' => $this->input->post('telefonoResponsable'),
+                    'extension' => $this->input->post('extResponsable')
+                );
+                $contrasena = $this->input->post('contrasenaResponsable1');
+                $usuario = array(                
+                    'correo' => strtoupper($this->input->post('correoResponsable1')),
+                    'contrasena' => hash("sha256", $contrasena),
+                    'tipo' => 'RESPONSABLE',
+                    'estatus' => 'ACTIVO'
+                );
+
+				$this->load->view('coordinador/EncabezadoCoordinador');*/
+		        $this->load->view('coordinador/VistaEditarResponsable');
+			}else{
+				echo "RECURSO NO DISPONIBLE PARA EDICIÓN";
+			}
+		}else{
+			echo "LOS DATOS NO SE RECIBIERON CORRECTAMENTE";
+		}	
+        
     }
 
 }

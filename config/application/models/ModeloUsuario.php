@@ -25,8 +25,9 @@ class ModeloUsuario extends CI_Model {
     {
         $estatus = "0";
         $this->db->where('idUsuario', $idUsuario);
-        $usuario =  $this->db->get('usuario')->result_array();
-        if(count($usuario) > 0){
+        $usuario = array();
+        $usuario =  $this->db->get('usuario')->row_array();
+        if($usuario){
             $estatus = "1";
         }
         return $estatus;
@@ -35,15 +36,15 @@ class ModeloUsuario extends CI_Model {
 
     public function obtenerUsuario($usuario)
     {
-        $this->db->where('correo', $usuario['correo']);
-        $this->db->where('contrasena', $usuario['contrasena']);
-        return $this->db->get('usuario')->result_array();
+        $this->db->where('correoUsuario', $usuario['correo']);
+        $this->db->where('contrasenaUsuario', $usuario['contrasena']);
+        return $this->db->get('usuario')->row_array();
     }
 
 
     public function obtenerCorreoYEstatus($idUsuario)
     {
-        $this->db->select('correo', 'estatus');
+        $this->db->select('correoUsuario', 'estatusUsuario');
         $this->db->where('idUsuario', $idUsuario);
         return $this->db->get('usuario')->result_array();
     }
@@ -51,9 +52,9 @@ class ModeloUsuario extends CI_Model {
     public function verificarCorreo($correo)
     {
         $estatus= "0";
-        $this->db->where('correo', $correo);
+        $this->db->where('correoUsuario', $correo);
         $usuario = $this->db->get('usuario')->result_array();        
-        if(count($usuario) > 0){
+        if($usuario){
             $estatus = "1";
         }
  
@@ -71,8 +72,8 @@ class ModeloUsuario extends CI_Model {
     {
         $estatus= "0";
         $this->db->where('idUsuario', $idUsuario);
-        $usuario = $this->db->get('usuario')->result_array(); 
-        if($usuario[0]['correo'] == $correo){
+        $usuario = $this->db->get('usuario')->row_array(); 
+        if($usuario['correoUsuario'] == $correo){
             $estatus = "1";
         }
         return $estatus;
@@ -80,17 +81,17 @@ class ModeloUsuario extends CI_Model {
 
     public function obtenerContrasena($idUsuario)
     {
-        $this->db->select('contrasena');
+        $this->db->select('contrasenaUsuario');
         $this->db->where('idUsuario', $idUsuario);
-        return $this->db->get('usuario')->result_array();
+        return $this->db->get('usuario')->row_array();
     }
 
 
     public function obtenerEstatus($idUsuario)
     {
-        $this->db->select('estatus');
+        $this->db->select('estatusUsuario');
         $this->db->where('idUsuario', $idUsuario);
-        return $this->db->get('usuario')->result_array();
+        return $this->db->get('usuario')->row_array();
     }
     
     

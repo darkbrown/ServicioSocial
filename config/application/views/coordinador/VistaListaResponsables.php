@@ -1,46 +1,46 @@
 <div class="container-fluid ">
-    <h2 name="titulo" id="titulo">Alumnos</h2>
+    <h2 name="titulo" id="titulo">Responsables de Proyectos</h2>
     <div class="table-responsive">
-        <table class="table table-striped table-sm table-hover" id="tablaAlumnos" name="tablaAlumnos">
+        <table class="table table-striped table-sm table-hover" id="tablaResponsables" name="tablaResponsables">
             <thead class="encabezadoTabla">
-                <th data-sortable="true">NOMBRE</th>
-                <th data-sortable="true">MATRÍCULA</th>
+                <th data-sortable="true">RESPONSABLE</th>
+                <th data-sortable="true">DEPENDENCIA</th>
                 <th data-sortable="true">CORREO ELECTRÓNICO</th>
                 <th data-sortable="true">TELÉFONO</th>
                 <th data-sortable="true">ACCIONES</th>
             </thead>
             <tbody>
-                <?php if(isset($listaAlumnos)) foreach (array_reverse($listaAlumnos) as $item):  ?>
+                <?php if(isset($listaResponsables)) foreach (array_reverse($listaResponsables) as $item):  ?>
                 <tr>
                     <td>
-                        <?php echo $item['nombreAlumno'] .' ' . $item['apellidosAlumno'] ?>
+                        <?php echo $item['nombreResponsable'] .' ' . $item['apellidosResponsable'] ?>
                     </td>
                     <td>
-                        <?php echo $item['matriculaAlumno'] ?>
+                        <?php echo $item['nombreDependencia'] ?>
                     </td>
                     <td>
                         <?php echo $item['correoUsuario'] ?>
                     </td>
                     <td>
-                        <?php echo $item['telefonoAlumno'] ?>
+                        <?php echo $item['telefonoResponsable'] ?>
                     </td>
                     <td>
                         <div class="btn-group">
-                            <a class="editar btn btn-default btn-rounded" id="editar" name="editar">
-                                <i class="fa fa-pencil-square-o" title="Editar Alumno"></i>
+                            <a class="editar btn btn-default btn-rounded" style="cursor:pointer" id="editar" name="editar">
+                                <i class="fa fa-pencil-square-o" title="Editar Responsable"></i>
                             </a>
-                            <a class="ver btn btn-default" id="ver" name="ver">
-                                <i class="fa fa-eye" title="Consultar Alumno"></i>
+                            <a class="ver btn btn-default" id="ver" style="cursor:pointer" name="ver">
+                                <i class="fa fa-eye" title="Consultar Responsable"></i>
                             </a>
                             <?php if($item['estatusUsuario']=='ACTIVO' ){
                             echo '
-                            <a class="cambiarEstatus btn btn-default" id="cambiarEstatus" name="cambiarEstatus">
-                            <i class="fa fa-toggle-on " title="Cuenta Alumno Activa"></i>
+                            <a class="cambiarEstatus btn btn-default" style="cursor:pointer" id="cambiarEstatus" name="cambiarEstatus">
+                            <i class="fa fa-toggle-on " title="Cuenta Responsable Activa"></i>
                             </a>';
                         }else{
                                 echo '
-                            <a class="cambiarEstatus btn btn-default" id="cambiarEstatus" name="cambiarEstatus">
-                            <i class="fa fa-toggle-off " title="Cuenta Alumno Suspendida"></i>
+                            <a class="cambiarEstatus btn btn-default" style="cursor:pointer" id="cambiarEstatus" name="cambiarEstatus">
+                            <i class="fa fa-toggle-off " title="Cuenta Responsable Suspendida"></i>
                             </a>';
                             }
                         ?>
@@ -50,32 +50,31 @@
                 <?php endforeach; ?>
             </tbody>
         </table>
-        
-        
+
     </div>
-   
+
 </div>
 
-<a href="#" class="registrarAlumno btn btn-dark fixed-bottom botonF1 ml-auto">+</a>
+<a href="#" class="registrarResponsable btn btn-dark fixed-bottom botonF1 ml-auto">+</a>
 
 <div class="modal" id="modalConfirmacion" tabindex="-1" role="dialog">
     <div class="modal-dialog " role="document">
         <div class="modal-content ">
             <div class="modal-header">
-                <h5 class="modal-title">CAMBIAR ESTATUS DEL ALUMNO</h5>
+                <h5 class="modal-title">CAMBIAR ESTATUS DEL RESPONSABLE</h5>
             </div>
             <div class="modal-body">
                 <div>
-                    <label>Alumno:</label>
-                    <label id="nombreAlumno" name="nombreAlumno"></label>
+                    <label>Responsable:</label>
+                    <label id="nombreResponsable" name="nombreResponsable"></label>
                 </div>
                 <div>
-                    <label>Matrícula:</label>
-                    <label id="matriculaAlumno" name="matriculaAlumno"></label>
+                    <label>Correo:</label>
+                    <label id="correoResponsable" name="correoResponsable"></label>
                 </div>
                 <label id="textoConfirmacion" name="textoConfirmacion">¿Confirma que desea cambiar el estatus del
-                    alumno. Si el alumno cuenta con una sesión activa se
-                    cerrará?</label>
+                    responsable? Sí el responsable cuenta con una sesión activa se
+                    cerrará</label>
             </div>
             <div class="modal-footer">
                 <button type="submit" name="botonConfirmar" id="botonConfirmar" class="btn btn-primary">CONFIRMAR</button>
@@ -103,8 +102,8 @@
 </body>
 
 </html>
-<script type="text/javascript" src="<?php echo base_url();?>js/coordinador/ListaAlumnos.js"></script>
+<script type="text/javascript" src="<?php echo base_url();?>js/coordinador/ListaResponsables.js"></script>
 <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/jquery.dataTables.css" />
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/dataTables.bootstrap4.css" />
-    <script type="text/javascript" src="<?php echo base_url();?>js/datatables.min.js"></script>
-    <script type="text/javascript" src="<?php echo base_url();?>js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/dataTables.bootstrap4.css" />
+<script type="text/javascript" src="<?php echo base_url();?>js/datatables.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url();?>js/jquery.dataTables.min.js"></script>
