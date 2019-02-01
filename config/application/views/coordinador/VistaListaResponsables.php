@@ -5,8 +5,8 @@
             <thead class="encabezadoTabla">
                 <th data-sortable="true">RESPONSABLE</th>
                 <th data-sortable="true">DEPENDENCIA</th>
-                <th data-sortable="true">CORREO ELECTRÓNICO</th>
-                <th data-sortable="true">TELÉFONO</th>
+                <th data-sortable="true">CORREO RESPONSABLE</th>
+                <th data-sortable="true">TEL. RESPONSABLE</th>
                 <th data-sortable="true">ACCIONES</th>
             </thead>
             <tbody>
@@ -22,7 +22,7 @@
                         <?php echo $item['correoUsuario'] ?>
                     </td>
                     <td>
-                        <?php echo $item['telefonoResponsable'] ?>
+                        <?php if($item['extensionResponsable'] == ''){echo $item['telefonoResponsable'];}else{echo $item['telefonoResponsable'] .' Ext. ' .$item['extensionResponsable'];} ?>
                     </td>
                     <td>
                         <div class="btn-group">

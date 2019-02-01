@@ -1,6 +1,16 @@
 $(document).ready(function () {
     var base_url = window.location.origin;
-    var usuario = "";
+    var correoNuevo = "";
+    var sectorSeleccionado = $('#sectorSeleccionado').val();
+    $('#sectorSeleccionado').val('');
+    $('#sectorDependencia').val(sectorSeleccionado);
+
+    var estadoRepublicaSeleccionado = $('#estadoRepublicaSeleccionado').val();
+    $('#estadoRepublicaSeleccionado').val('');
+    $('#estadoRepublica').val(estadoRepublicaSeleccionado);
+
+
+
     $("#telefonoDependencia, #extDependencia, #cpDependencia, #numExterior, #numInterior, #usuariosDirectos, #usuariosIndirectos, #telefonoResponsable, #extResponsable").keypress(function(e){
         var keynum = window.event ? window.event.keyCode : e.which;
         if ((keynum == 8) || (keynum == 46))
@@ -8,7 +18,7 @@ $(document).ready(function () {
         return /\d/.test(String.fromCharCode(keynum));
     });
 
-    $("#formularioDependencia").validate({
+    $("#formularioResponsable").validate({
 		rules: {
             nombreDependencia: { 
                 required: true,
@@ -133,24 +143,16 @@ $(document).ready(function () {
                     return $.trim(value);
                 },
                 email: true,
+                maxlength: 320,
                 equalTo: "#correoResponsable1"
             },
-            contrasenaResponsable1: {
-                required: true,
-                normalizer: function (value) {
-                    return $.trim(value);
-                }, 
-                minlength: 6,
-                maxlength: 15
-            },
-            contrasenaResponsable2: {
-                required: true,
+            correoActual: { 
+                required:true,
                 normalizer: function (value) {
                     return $.trim(value);
                 },
-                minlength: 6,
-                maxlength: 15,
-                equalTo: "#contrasenaResponsable1"
+                email: true,
+                maxlength: 320
             }
         },           
         messages: {
@@ -232,18 +234,13 @@ $(document).ready(function () {
             correoResponsable2: {
                 required: "Dato requerido",
                 email: "Ingrese una dirección de correo válida",
+                maxlength: "No debe exeder los 320 carácteres",
                 equalTo: "Los correos no coinciden"
             },
-            contrasenaResponsable1: {
+            correoActual: {
                 required: "Dato requerido",
-                minlength: "La contraseña debe tener entre 6 y 15 caracteres",
-                maxlength: "La contraseña debe tener entre 6 y 15 caracteres"
-            },
-            contrasenaResponsable2: {
-                required: "Dato requerido",
-                minlength: "La contraseña debe tener entre 6 y 15 caracteres",
-                maxlength: "La contraseña debe tener entre 6 y 15 caracteres",
-                equalTo: "Las contraseñas no coinciden"
+                email: "Ingrese una dirección de correo válida",
+                maxlength: "No debe exeder los 320 carácteres"
             }
         },
         submitHandler: function(){
@@ -276,13 +273,12 @@ $(document).ready(function () {
         var telefonoResponsable = $("#telefonoResponsable").val().trim();    
         var extResponsable = $("#extResponsable").val().trim(); 
         var correoResponsable1 = $("#correoResponsable1").val().trim();    
-        var correoResponsable2 = $("#correoResponsable2").val().trim();    
-        var contrasenaResponsable1 = $("#contrasenaResponsable1").val().trim();    
-        var contrasenaResponsable2 = $("#contrasenaResponsable2").val().trim();     
-        var usuarioActual = document.title;  
+        var correoResponsable2 = $("#correoResponsable2").val().trim(); 
+        var correoActual = $("#correoActual").val().trim();
+        correoNuevo = correoResponsable1;  
 		$.ajax({
 			type: "POST",
-			url: base_url + "/ServicioSocial/index.php/RegistrarResponsable",
+			url: base_url + "/ServicioSocial/index.php/ModificarResponsable",
 			data: {
                 'nombreDependencia': nombreDependencia,
                 'sectorDependencia': sectorDependencia,
@@ -304,61 +300,68 @@ $(document).ready(function () {
                 'extResponsable': extResponsable,
                 'correoResponsable1': correoResponsable1,
                 'correoResponsable2': correoResponsable2,
-                'contrasenaResponsable1': contrasenaResponsable1,
-                'contrasenaResponsable2': contrasenaResponsable2,
-                'usuarioActual': usuarioActual
+                'correoActual': correoActual
 		    },
 		success: function(response){   
             alert(response); 
             $("#modalConfirmacion").modal('hide');
             if(response == 'vacio'){
-                $('<div class="alert alert-warning datosVacios" role="alert">Los datos no se recibieron correctamente, intenta de nuevo</div>').insertAfter($("#titulo"));
+                $('<div class="alert alert-warning datosVacios" role="alert">Los datos no se recibieron correctamente, intenta de nuevo</div>').insertAfter($("#correoActual"));
                 $('body,html').animate({scrollTop : 0}, 500);
                 setTimeout(function() {
                     $(".datosVacios").fadeOut(1500);
                 },10000);
             }
             if(response == 'datosInvalidos'){
-                $('<div class="alert alert-warning datosInvalidos" role="alert">Algunos datos son inválidos</div>').insertAfter($("#titulo"));
+                $('<div class="alert alert-warning datosInvalidos" role="alert">Algunos datos son inválidos</div>').insertAfter($("#correoActual"));
                 $('body,html').animate({scrollTop : 0}, 500);
                 setTimeout(function() {
                     $(".datosInvalidos").fadeOut(1500);
                 },10000);
             } 
+
+            if(response == 'correoInvalido'){
+                $('<div class="alert alert-warning correoInvalido" role="alert">No se encontro una cuenta con el correo actual</div>').insertAfter($("#correoActual"));
+                $('body,html').animate({scrollTop : 0}, 500);
+                setTimeout(function() {
+                    $(".correoInvalido").fadeOut(1500);
+                },10000);
+            } 
+
 			if(response == 'yaExiste'){
-                $('<div class="alert alert-warning yaExiste" role="alert">Ya existe un responsable con el mismo correo</div>').insertAfter($("#titulo"));
+                $('<div class="alert alert-warning yaExiste" role="alert">Ya existe un responsable con el mismo correo que intenta registrar</div>').insertAfter($("#correoActual"));
                 $('body,html').animate({scrollTop : 0}, 500);
                 setTimeout(function() {
                     $(".yaExiste").fadeOut(1500);
                 },10000);
             }  
-            if(response == 'error'){
-                $('<div class="alert alert-warning error" role="alert">Error al registrar su cuenta, intente de nuevo</div>').insertAfter($("#titulo"));
+            if(response == 'errorCorreo'){
+                $('<div class="alert alert-warning errorCorreo" role="alert">Error al guardar el nuevo correo, intente de nuevo</div>').insertAfter($("#correoActual"));
                 $('body,html').animate({scrollTop : 0}, 500);
                 setTimeout(function() {
-                    $(".error").fadeOut(1500);
+                    $(".errorCorreo").fadeOut(1500);
                 },10000);
             }
 
-            if(response == 'coordinador'){
-                usuario = 'coordinador';
+            if(response == true){
                 $("#modalExitoso").modal('show');
             }
-            if(response == 'nuevo'){
-                usuario = 'nuevo';
-                $("#modalExitoso").modal('show');
+
+            if(response == false){
+                $(".sinModificar").fadeOut(1);
+                $('<div class="alert alert-warning sinModificar" role="alert">No se ha modificado ningún dato</div>').insertAfter($("#correoActual"));
+                $('body,html').animate({scrollTop : 0}, 500);
+                setTimeout(function() {
+                    $(".sinModificar").fadeOut(1500);
+                },10000);
             }
-            
+     
 		}
 		});
     });
 
     $("#botonCerrar").click(function(){
-        if(usuario == 'coordinador'){
-            window.location.href = base_url + "/ServicioSocial/index.php/Responsables";
-        }else{
-            window.location.href = base_url + "/ServicioSocial/";
-        }
+        location.href = base_url + "/ServicioSocial/index.php/Responsables";
     });
 
         
@@ -389,39 +392,7 @@ $(document).ready(function () {
             spanCorreo2.hide();
         }
 	}
-    
-      //----MENSAJE CUANDO COINCIDEN LAS CONTRASEÑAS-----
-
-
-      var contrasena = $('[name=contrasenaResponsable1]');
-      var contrasena2 = $('[name=contrasenaResponsable2]');
-      
-      var spanContrasena2 = $('<span class="camposiguales">Coinciden</span>').insertAfter(contrasena2);
-      spanContrasena2.hide();
-  
-      contrasena.keyup(function () {
-        contrasena2.val("");
-          spanContrasena2.hide();
-      });
-  
-      contrasena2.keyup(function () {
-          var valor1 = contrasena.val().trim();
-          if(valor1.length >= 6 || valor1.length <= 15){
-              coincideContrasena();
-          }else{
-            spanContrasena2.hide();
-          }     
-      });
-  
-      function coincideContrasena() {
-          var valor1 = contrasena.val().trim();
-          var valor2 = contrasena2.val().trim();
-          if (valor1.length != 0 && valor1 == valor2) {     
-            spanContrasena2.show();
-          }else{
-            spanContrasena2.hide();
-          }
-      }
+     
 
 });
 

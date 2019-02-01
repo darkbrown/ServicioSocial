@@ -79,6 +79,7 @@ $route['CambiarContrasenaAlumno/(:any)'] = 'ControladorAlumno/cambiarContrasenaA
 $route['ModificarContrasenaAlumno'] = 'ControladorAlumno/modificarContrasenaAlumno';
 $route['ModificarAlumno'] = 'ControladorAlumno/modificarAlumno';
 $route['ModificarEstatusAlumno'] = 'ControladorAlumno/modificarEstatusAlumno';
+$route['ModificarResponsable'] = 'ControladorResponsable/modificarResponsable';
 
 /** ALUMNO */
 $route['inicioAlumno'] = 'ControladorAlumno/index';

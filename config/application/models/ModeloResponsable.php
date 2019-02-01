@@ -18,11 +18,17 @@ class ModeloResponsable extends CI_Model {
 
     public function obtenerResponsables(){
         $this->db->select('nombreResponsable, apellidosResponsable, telefonoResponsable, extensionResponsable
-        , estatusUsuario, nombreDependencia, correoUsuario');
+        , estatusUsuario, nombreDependencia, correoUsuario, extensionResponsable');
         $this->db->from('responsable r');
         $this->db->join('usuario u', 'u.idUsuario = r.Usuario_idUsuario');
         $this->db->join('dependencia d', 'd.Responsable_idUsuario = u.idUsuario');
         return $this->db->get()->result_array();
+    }
+
+    public function modificarResponsable($responsable, $idUsuario){  
+        $this->db->where('Usuario_idUsuario', $idUsuario);
+        $this->db->update('responsable', $responsable);
+        return (bool)($this->db->affected_rows() > 0);
     }
 
 }

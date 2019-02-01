@@ -15,7 +15,7 @@ $(document).ready(function () {
     $('#tablaResponsables tbody').on( 'click', '.editar', function () {
         var datosFila = table.row( $(this).parents('tr') ).data();
         correo = encodeURIComponent(btoa(datosFila[2]));
-        window.open(base_url + "/ServicioSocial/index.php/EditarResponsable/" + correo); 
+        location.href = base_url + "/ServicioSocial/index.php/EditarResponsable/" + correo;
     } );
 
 

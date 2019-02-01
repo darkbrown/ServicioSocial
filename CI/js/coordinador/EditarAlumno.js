@@ -139,7 +139,7 @@ $(document).ready(function () {
 
             if(response == false){
                 $(".errorAlGuardar").fadeOut(1500);
-                $('<div class="alert alert-warning errorAlGuardar" role="alert">No ha modificado ningún dato</div>').insertAfter($("#matricula"));
+                $('<div class="alert alert-warning errorAlGuardar" role="alert">No se ha modificado ningún dato</div>').insertAfter($("#matricula"));
                 $('body,html').animate({scrollTop : 0}, 500);
                 setTimeout(function() {
                     $(".errorAlGuardar").fadeOut(1500);

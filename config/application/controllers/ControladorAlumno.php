@@ -143,13 +143,15 @@ class ControladorAlumno extends CI_Controller {
 			$datosUsuario = array(
 				'correoUsuario' => mb_strtoupper($this->input->post('correo'))
 			);
-            $this->form_validation->set_rules('nombre', 'Nombre', 'trim|required');
-			$this->form_validation->set_rules('apellidos', 'Apellidos', 'trim|required');
-			$this->form_validation->set_rules('matricula', 'Matricula', 'trim|required|min_length[9]|max_length[9]');
-            $this->form_validation->set_rules('bloque', 'Bloque', 'trim|required|numeric');
-            $this->form_validation->set_rules('seccion', 'Seccion', 'trim|required|numeric');
-            $this->form_validation->set_rules('correo', 'Correo', 'trim|required|valid_email');
-            $this->form_validation->set_rules('telefono', 'Telefono', 'trim|required|numeric');
+
+			$this->form_validation->set_rules('nombre', 'Nombre', 'trim|required|max_length[60]');
+            $this->form_validation->set_rules('apellidos', 'Apellidos', 'trim|required|max_length[60]');
+            $this->form_validation->set_rules('matricula', 'Matricula', 'trim|required|min_length[9]|max_length[9]');
+            $this->form_validation->set_rules('bloque', 'Bloque', 'trim|required|numeric|max_length[2]');
+            $this->form_validation->set_rules('seccion', 'Seccion', 'trim|required|numeric|max_length[2]');
+            $this->form_validation->set_rules('correo', 'Correo', 'trim|required|valid_email|max_length[320]');
+            $this->form_validation->set_rules('telefono', 'Telefono', 'trim|required|numeric|max_length[30]');
+        
 
             if($this->form_validation->run() == TRUE){
 				if($this->ModeloAlumno->verificarMatricula($datosAlumno['matriculaAlumno']) == '1'){

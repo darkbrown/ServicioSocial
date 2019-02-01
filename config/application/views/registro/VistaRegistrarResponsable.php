@@ -18,8 +18,8 @@
                 <label for="sectorDependencia">Sector</label>
                 <select id="sectorDependencia" class="form-control" name="sectorDependencia" required>
                     <option value="">---------</option>
-                    <option value="público" selected>Público</option>
-                    <option value="privado">Privado</option>
+                    <option value="PÚBLICO" selected>PÚBLICO</option>
+                    <option value="PRIVADO">PRIVADO</option>
                 </select>
             </div>
             <div class="form-group col-md-3 mb-2 border-0">
@@ -40,38 +40,38 @@
                 <label for="estadoRepublica">Estado</label>
                 <select id="estadoRepublica" class="form-control" name="estadoRepublica" required>
                     <option value="">---------</option>
-                    <option value="Aguascalientes">Aguascalientes</option>
-                    <option value="Baja California">Baja California</option>
-                    <option value="Baja California Sur">Baja California Sur</option>
-                    <option value="Campeche">Campeche</option>
-                    <option value="Chiapas">Chiapas</option>
-                    <option value="Chihuahua">Chihuahua</option>
-                    <option value="Coahuila">Coahuila</option>
-                    <option value="Colima" selected>Colima</option>
-                    <option value="Distrito Federal">Distrito Federal</option>
-                    <option value="Durango">Durango</option>
-                    <option value="Estado de México">Estado de México</option>
-                    <option value="Guanajuato">Guanajuato</option>
-                    <option value="Guerrero">Guerrero</option>
-                    <option value="Hidalgo">Hidalgo</option>
-                    <option value="Jalisco">Jalisco</option>
-                    <option value="Michoacán">Michoacán</option>
-                    <option value="Morelos">Morelos</option>
-                    <option value="Nayarit">Nayarit</option>
-                    <option value="Nuevo León">Nuevo León</option>
-                    <option value="Oaxaca">Oaxaca</option>
-                    <option value="Puebla">Puebla</option>
-                    <option value="Querétaro">Querétaro</option>
-                    <option value="Quintana Roo">Quintana Roo</option>
-                    <option value="San Luis Potosí">San Luis Potosí</option>
-                    <option value="Sinaloa">Sinaloa</option>
-                    <option value="Sonora">Sonora</option>
-                    <option value="Tabasco">Tabasco</option>
-                    <option value="Tamaulipas">Tamaulipas</option>
-                    <option value="Tlaxcala">Tlaxcala</option>
-                    <option value="Veracruz">Veracruz</option>
-                    <option value="Yucatán">Yucatán</option>
-                    <option value="Zacatecas">Zacatecas</option>
+                    <option value="AGUASCALIENTES">AGUASCALIENTES</option>
+                    <option value="BAJA CALIFORNIA">BAJA CALIFORNIA</option>
+                    <option value="BAJA CALIFORNIA SUR">BAJA CALIFORNIA SUR</option>
+                    <option value="CAMPECHE">CAMPECHE</option>
+                    <option value="CHIAPAS">CHIAPAS</option>
+                    <option value="CHIHUAHUA">CHIHUAHUA</option>
+                    <option value="COAHUILA">COAHUILA</option>
+                    <option value="COLIMA">COLIMA</option>
+                    <option value="CDMX" selected>CDMX</option>
+                    <option value="DURANGO">DURANGO</option>
+                    <option value="ESTADO DE MÉXICO">ESTADO DE MÉXICO</option>
+                    <option value="GUANAJUATO">GUANAJUATO</option>
+                    <option value="GUERRERO">GUERRERO</option>
+                    <option value="HIDALGO">HIDALGO</option>
+                    <option value="JALISCO">JALISCO</option>
+                    <option value="MICHOACÁN">MICHOACÁN</option>
+                    <option value="MORELOS">MORELOS</option>
+                    <option value="NAYARIT">NAYARIT</option>
+                    <option value="NUEVO LEÓN">NUEVO LEÓN</option>
+                    <option value="OAXACA">OAXACA</option>
+                    <option value="PUEBLA">PUEBLA</option>
+                    <option value="QUERÉTARO">QUERÉTARO</option>
+                    <option value="QUINTANA ROO">QUINTANA ROO</option>
+                    <option value="SAN LUIS POTOSÍ">SAN LUIS POTOSÍ</option>
+                    <option value="SINALOA">SINALOA</option>
+                    <option value="SONORA">SONORA</option>
+                    <option value="TABASCO">TABASCO</option>
+                    <option value="TAMAULIPAS">TAMAULIPAS</option>
+                    <option value="TLAXCALA">TLAXCALA</option>
+                    <option value="VERACRUZ">VERACRUZ</option>
+                    <option value="YUCATÁN">YUCATÁN</option>
+                    <option value="ZACATECAS">ZACATECAS</option>
                 </select>
             </div>
             <div class="form-group col-md-2 mb-2 border-0">
